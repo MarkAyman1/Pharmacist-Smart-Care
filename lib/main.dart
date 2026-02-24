@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pharmacist/core/app_theme.dart';
+import 'package:pharmacist/features/splash/splash_screen.dart';
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() {
@@ -17,7 +18,7 @@ class Pharmacist extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.system,
       theme: AppThemes.lightTheme,
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: SplashScreen(),
     );
   }
 }
