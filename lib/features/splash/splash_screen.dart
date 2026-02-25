@@ -15,14 +15,17 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    _controller = SplashController(context: context, duration: const Duration(seconds: 3));
+    _controller = SplashController(
+      context: context,
+      duration: const Duration(seconds: 5),
+    );
     _controller.start();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white, 
+      backgroundColor: Colors.white,
       body: Center(
         child: Lottie.asset(
           'assets/animations/Doctor.json',
