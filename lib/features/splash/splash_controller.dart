@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:pharmacist/features/main/presentation/views/main_screen_view.dart';
+import 'package:pharmacist/features/auth/login/presentation/views/login_screen.dart';
 
 class SplashController {
   final BuildContext context;
@@ -15,7 +15,7 @@ class SplashController {
     Timer(duration, () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => MainScreenView()),
+        MaterialPageRoute(builder: (_) => LoginScreen()),
       );
     });
   }
