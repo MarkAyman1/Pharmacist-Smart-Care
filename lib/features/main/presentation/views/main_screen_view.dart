@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:pharmacist/core/app_color.dart';
+import 'package:pharmacist/features/categories/presentation/screens/categories_screen.dart';
+import 'package:pharmacist/features/companies/presentation/screens/companies_screen.dart';
 import 'package:pharmacist/features/main/presentation/cubits/navigationcubit%20.dart';
 import 'package:pharmacist/main.dart';
 
@@ -11,7 +13,11 @@ class MainScreenView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> _screens = const [MyHomePage(title: 'home')];
+    final List<Widget> _screens = const [
+      CategoriesScreen(),
+      CompaniesScreen(),
+      MyHomePage(title: 'home'),
+    ];
 
     return BlocProvider(
       create: (_) => NavigationCubit(),
@@ -36,7 +42,8 @@ class MainScreenView extends StatelessWidget {
                 end: Alignment.bottomRight,
               ),
               items: const [
-                TabItem(icon: LineIcons.boxOpen, title: 'Home'),
+                TabItem(icon: LineIcons.box, title: 'categories'),
+                TabItem(icon: LineIcons.productHunt, title: 'products'),
                 TabItem(icon: LineIcons.plusCircle, title: 'Add product'),
                 TabItem(icon: LineIcons.receipt, title: 'Orders'),
               ],
