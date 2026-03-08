@@ -1,4 +1,9 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pharmacist/core/api/dio_consumer.dart';
+import 'package:pharmacist/features/auth/login/data/repo/login_repositry.dart';
+import 'package:pharmacist/features/auth/login/presentation/bloc/login_bloc.dart';
 import 'package:pharmacist/features/auth/login/presentation/views/widgets/bottom_widget.dart';
 import 'package:pharmacist/features/auth/login/presentation/views/widgets/login_form.dart';
 import 'package:pharmacist/features/auth/widgets/header_section.dart';
@@ -9,18 +14,23 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LottieBackground(
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: Column(
-          children: [
-            const HeaderSection(),
-            const SizedBox(height: 100),
-            const LoginForm(),
-            const Spacer(),
-            BottomWidget(),
-            const SizedBox(height: 20),
-          ],
+    return BlocProvider(
+      create: (context) => LoginBloc(LoginRepository(DioConsumer(Dio()))),
+      child: LottieBackground(
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                const HeaderSection(),
+                const SizedBox(height: 100),
+                const LoginForm(),
+                const SizedBox(height: 200),
+                BottomWidget(),
+                const SizedBox(height: 20),
+              ],
+            ),
+          ),
         ),
       ),
     );
