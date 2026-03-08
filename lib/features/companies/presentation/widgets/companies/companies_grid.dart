@@ -10,27 +10,44 @@ class CompaniesGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        childAspectRatio: 0.9,
-        crossAxisSpacing: 16,
-        mainAxisSpacing: 16,
-      ),
-      itemCount: companies.length,
-      itemBuilder: (context, index) {
-        final company = companies[index];
-        return CompanyCard(
-          name: company.name,
-          imageUrl: company.imageUrl,
-          onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (_) => CompanyProductsScreen(
-                  companyName: company.name,
-                  products: company.products,
-                ),
-              ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final width = constraints.maxWidth;
+
+        int crossAxisCount;
+        if (width >= 1200) {
+          crossAxisCount = 5; 
+        } else if (width >= 900) {
+          crossAxisCount = 4; 
+        } else if (width >= 600) {
+          crossAxisCount = 3; 
+        } else {
+          crossAxisCount = 2; 
+        }
+
+        return GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: crossAxisCount,
+            childAspectRatio: 0.9,
+            crossAxisSpacing: 16,
+            mainAxisSpacing: 16,
+          ),
+          itemCount: companies.length,
+          itemBuilder: (context, index) {
+            final company = companies[index];
+            return CompanyCard(
+              name: company.name,
+              imageUrl: company.imageUrl,
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => CompanyProductsScreen(
+                      companyName: company.name,
+                      products: company.products,
+                    ),
+                  ),
+                );
+              },
             );
           },
         );

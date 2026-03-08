@@ -24,15 +24,23 @@ class CategoriesScreen extends StatelessWidget {
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CategoriesHeader(),
-                const SizedBox(height: 16),
-                Expanded(
-                  child: CategoriesGrid(categories: categories),
+            child: Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(
+                  maxWidth: 1200, // keep content nicely centered on desktop
                 ),
-              ],
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CategoriesHeader(),
+                    const SizedBox(height: 16),
+                    const SizedBox(height: 8),
+                    Expanded(
+                      child: CategoriesGrid(categories: categories),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ),
         ),

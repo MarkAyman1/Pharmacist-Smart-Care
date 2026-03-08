@@ -9,28 +9,45 @@ class CategoriesGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        childAspectRatio: 0.9,
-        crossAxisSpacing: 16,
-        mainAxisSpacing: 16,
-      ),
-      itemCount: categories.length,
-      itemBuilder: (context, index) {
-        final category = categories[index];
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final width = constraints.maxWidth;
 
-        return CategoryCard(
-          name: category.name,
-          imageUrl: category.imageUrl,
-          onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (_) => CategoryProductsScreen(
-                  categoryName: category.name,
-                  products: category.products,
-                ),
-              ),
+        int crossAxisCount;
+        if (width >= 1200) {
+          crossAxisCount = 5;
+        } else if (width >= 900) {
+          crossAxisCount = 4; 
+        } else if (width >= 600) {
+          crossAxisCount = 3; 
+        } else {
+          crossAxisCount = 2; 
+        }
+
+        return GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: crossAxisCount,
+            childAspectRatio: 0.9,
+            crossAxisSpacing: 16,
+            mainAxisSpacing: 16,
+          ),
+          itemCount: categories.length,
+          itemBuilder: (context, index) {
+            final category = categories[index];
+
+            return CategoryCard(
+              name: category.name,
+              imageUrl: category.imageUrl,
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => CategoryProductsScreen(
+                      categoryName: category.name,
+                      products: category.products,
+                    ),
+                  ),
+                );
+              },
             );
           },
         );

@@ -19,15 +19,22 @@ class CompaniesScreen extends StatelessWidget {
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const CompaniesHeader(),
-                const SizedBox(height: 16),
-                Expanded(
-                  child: CompaniesGrid(companies: mockCompanies),
+            child: Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(
+                  maxWidth: 1200,
                 ),
-              ],
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const CompaniesHeader(),
+                    const SizedBox(height: 16),
+                    Expanded(
+                      child: CompaniesGrid(companies: mockCompanies),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ),
         ),
