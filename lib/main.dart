@@ -1,13 +1,15 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:pharmacist/core/app_theme.dart';
 import 'package:pharmacist/core/services/cache_helper.dart';
 import 'package:pharmacist/features/splash/splash_screen.dart';
+
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
-void main()async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await CacheHelper.init();
-  runApp(const Pharmacist());
+  runApp(DevicePreview(builder: (context) => Pharmacist()));
 }
 
 class Pharmacist extends StatelessWidget {
