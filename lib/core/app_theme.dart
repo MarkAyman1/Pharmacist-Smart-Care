@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pharmacist/core/app_color.dart';
+import 'package:pharmacist/core/widgets/theme_toggle_button.dart';
 import 'package:pharmacist/main.dart';
 
 // Defines the text styles for both light and dark typography
@@ -74,9 +75,7 @@ class AppThemes {
     cardTheme: CardThemeData(
       color: AppColors.white,
       elevation: 4.0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       shadowColor: AppColors.primaryblue.withValues(alpha: 0.12),
     ),
@@ -139,9 +138,7 @@ class AppThemes {
     cardTheme: CardThemeData(
       color: AppColors.darkSurface,
       elevation: 4.0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       shadowColor: Colors.black.withValues(alpha: 0.4),
     ),
@@ -163,7 +160,7 @@ class AppThemes {
     Widget? trailing,
   }) {
     final gradientColors = isDarkMode
-        ? [AppColors.primaryblue, AppColors.secondaryDarkColor]
+        ? [AppColors.primaryLightColor, AppColors.secondaryDarkColor]
         : [AppColors.primaryblue, AppColors.primaryblue, AppColors.accentGreen];
 
     return AppBar(
@@ -186,6 +183,7 @@ class AppThemes {
             )
           : null,
       actions: [
+        ThemeToggleButton(),
         if (trailing != null) trailing,
         const SizedBox(width: 8),
       ],
