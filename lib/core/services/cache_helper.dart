@@ -57,4 +57,16 @@ class CacheHelper {
   static bool isOnboardingCompleted() {
     return _sharedPreferences.getBool(_onboardingKey) ?? false;
   }
+  // ================= Generic Bool =================
+
+static Future<void> saveBool({
+  required String key,
+  required bool value,
+}) async {
+  await _sharedPreferences.setBool(key, value);
+}
+
+static bool? getBool(String key) {
+  return _sharedPreferences.getBool(key);
+}
 }

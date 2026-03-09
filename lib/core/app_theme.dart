@@ -71,13 +71,14 @@ class AppThemes {
       ),
     ),
 
-    cardTheme: const CardThemeData(
-      color: Color(0xFFDEF7E4),
-      elevation: 2.0,
+    cardTheme: CardThemeData(
+      color: AppColors.white,
+      elevation: 4.0,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(16)),
+        borderRadius: BorderRadius.circular(16),
       ),
-      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      shadowColor: AppColors.primaryblue.withValues(alpha: 0.12),
     ),
     radioTheme: RadioThemeData(
       fillColor: WidgetStateProperty.resolveWith<Color>((
@@ -132,15 +133,17 @@ class AppThemes {
         foregroundColor: AppColors.white,
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        shadowColor: AppColors.primaryblue.withValues(alpha: 0.4),
       ),
     ),
-    cardTheme: const CardThemeData(
+    cardTheme: CardThemeData(
       color: AppColors.darkSurface,
-      elevation: 2.0,
+      elevation: 4.0,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(16)),
+        borderRadius: BorderRadius.circular(16),
       ),
-      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      shadowColor: Colors.black.withValues(alpha: 0.4),
     ),
     radioTheme: RadioThemeData(
       fillColor: WidgetStateProperty.resolveWith<Color>((
@@ -157,6 +160,7 @@ class AppThemes {
     required String title,
     bool showBackButton = false,
     bool isDarkMode = false,
+    Widget? trailing,
   }) {
     final gradientColors = isDarkMode
         ? [AppColors.primaryblue, AppColors.secondaryDarkColor]
@@ -181,6 +185,10 @@ class AppThemes {
               onPressed: () => Navigator.of(navigatorKey.currentContext!).pop(),
             )
           : null,
+      actions: [
+        if (trailing != null) trailing,
+        const SizedBox(width: 8),
+      ],
       flexibleSpace: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(

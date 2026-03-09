@@ -13,6 +13,7 @@ class MainScreenView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final List<Widget> _screens = const [
       CategoriesScreen(),
       CompaniesScreen(),
@@ -37,7 +38,12 @@ class MainScreenView extends StatelessWidget {
                   context.read<NavigationCubit>().changeIndex(index),
               activeColor: Colors.white,
               gradient: LinearGradient(
-                colors: [AppColors.accentGreen, AppColors.primaryLightColor],
+                colors: !isDark
+                    ? [AppColors.accentGreen, AppColors.primaryLightColor]
+                    : [
+                        AppColors.secondaryDarkColor,
+                        AppColors.primaryLightColor,
+                      ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
