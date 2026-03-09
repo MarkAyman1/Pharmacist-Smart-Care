@@ -28,7 +28,9 @@ class MainScreenView extends StatelessWidget {
             body: IndexedStack(index: currentIndex, children: _screens),
             bottomNavigationBar: ConvexAppBar(
               style: TabStyle.reactCircle,
-              backgroundColor: AppColors.primaryblue,
+              backgroundColor: !isDark
+                  ? AppColors.primaryblue
+                  : AppColors.darkBackground,
               color: AppColors.white,
               elevation: 12,
               curveSize: 90,
@@ -36,7 +38,9 @@ class MainScreenView extends StatelessWidget {
               initialActiveIndex: currentIndex,
               onTap: (index) =>
                   context.read<NavigationCubit>().changeIndex(index),
-              activeColor: Colors.white,
+              activeColor: !isDark
+                  ? AppColors.white
+                  : AppColors.primaryLightColor,
               gradient: LinearGradient(
                 colors: !isDark
                     ? [AppColors.accentGreen, AppColors.primaryLightColor]
