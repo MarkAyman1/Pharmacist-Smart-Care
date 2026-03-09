@@ -1,7 +1,10 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pharmacist/core/app_theme.dart';
 import 'package:pharmacist/core/services/cache_helper.dart';
+import 'package:pharmacist/core/theme/bloc/theme_bloc.dart';
+import 'package:pharmacist/core/theme/bloc/theme_state.dart';
 import 'package:pharmacist/features/splash/splash_screen.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -17,13 +20,21 @@ class Pharmacist extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      navigatorKey: navigatorKey,
-      title: 'pharmacist',
-      debugShowCheckedModeBanner: false,
-      themeMode: ThemeMode.system,
-      theme: AppThemes.lightTheme,
-      home: SplashScreen(),
+    return BlocProvider(
+      create: (_) => ThemeBloc(),
+      child: BlocBuilder<ThemeBloc, ThemeState>(
+        builder: (context, themeState) {
+          return MaterialApp(
+            navigatorKey: navigatorKey,
+            title: 'pharmacist',
+            debugShowCheckedModeBanner: false,
+            themeMode: themeState.themeMode,
+            theme: AppThemes.lightTheme,
+            darkTheme: AppThemes.darkTheme,
+            home: SplashScreen(),
+          );
+        },
+      ),
     );
   }
 }

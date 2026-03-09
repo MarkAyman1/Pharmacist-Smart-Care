@@ -7,8 +7,9 @@ class AppBackground {
       gradient: LinearGradient(
         colors: isDark
             ? [
-                AppColors.darkBackground,
-                AppColors.darkSurface,
+                AppColors.darkGrey,
+                AppColors.primaryDarkColor,
+                AppColors.darkGrey,
               ]
             : [
                 AppColors.lightGrey,
