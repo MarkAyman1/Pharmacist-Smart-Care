@@ -214,7 +214,6 @@ class _RegisterFormState extends State<RegisterForm> {
                               gender != null &&
                               selectedStoreId != null) {
                             final genderValue = gender == 'Male' ? 0 : 1;
-
                             context.read<RegisterBloc>().add(
                               RegisterSubmitted(
                                 firstName: firstNameController.text,
@@ -223,9 +222,8 @@ class _RegisterFormState extends State<RegisterForm> {
                                 phoneNumber: phoneController.text,
                                 email: emailController.text,
                                 password: passwordController.text,
-                                birthDate: "1999-9-9",
                                 gender: genderValue,
-                                profileImage: pickedImage!,
+                                profileImage: pickedImage,
                                 licenseNumber: licenceController.text,
                                 storeId: selectedStoreId!,
                               ),

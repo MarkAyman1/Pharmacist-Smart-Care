@@ -22,9 +22,13 @@ class LoginForm extends StatelessWidget {
     return BlocConsumer<LoginBloc, LoginState>(
       listener: (context, state) {
         if (state is LoginSuccess) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(const SnackBar(content: Text("Login Success")));
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text("Login Success"),
+              behavior: SnackBarBehavior.floating,
+              backgroundColor: Colors.green,
+            ),
+          );
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (_) => const MainScreenView()),

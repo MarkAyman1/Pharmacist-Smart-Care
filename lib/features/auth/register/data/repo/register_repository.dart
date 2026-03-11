@@ -19,7 +19,6 @@ class RegisterRepository {
     required String phoneNumber,
     required String email,
     required String password,
-    required String birthDate,
     required int gender,
     XFile? profileImage,
     required String licenseNumber,
@@ -46,13 +45,12 @@ class RegisterRepository {
         "PhoneNumber": phoneNumber,
         "Email": email,
         "Password": password,
-        "BirthDate": birthDate,
         "Gender": gender,
         "ProfileImage": imageFile,
         "storeId": StoreId,
         "LicenseNumber": licenseNumber,
       });
-      
+
       print('📦 Sending form data:');
       for (var f in formData.fields) {
         print('${f.key}: ${f.value}');

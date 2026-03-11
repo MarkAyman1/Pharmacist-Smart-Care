@@ -15,9 +15,8 @@ class RegisterSubmitted extends RegisterEvent {
   final String phoneNumber;
   final String email;
   final String password;
-  final String birthDate;
   final int gender; // 0 = Male, 1 = Female
-  final XFile profileImage;
+  final XFile? profileImage;
   final String licenseNumber;
   final String storeId;
 
@@ -28,9 +27,8 @@ class RegisterSubmitted extends RegisterEvent {
     required this.phoneNumber,
     required this.email,
     required this.password,
-    required this.birthDate,
     required this.gender,
-    required this.profileImage,
+    this.profileImage,
     required this.licenseNumber,
     required this.storeId,
   });
@@ -43,11 +41,11 @@ class RegisterSubmitted extends RegisterEvent {
     phoneNumber,
     email,
     password,
-    birthDate,
     gender,
     profileImage,
     licenseNumber,
     storeId,
   ];
 }
+
 class LoadStores extends RegisterEvent {}
