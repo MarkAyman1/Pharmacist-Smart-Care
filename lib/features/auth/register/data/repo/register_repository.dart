@@ -46,7 +46,6 @@ class RegisterRepository {
         "PhoneNumber": phoneNumber,
         "Email": email,
         "Password": password,
-        "BirthDate": birthDate,
         "Gender": gender,
         "ProfileImage": imageFile,
         "storeId": StoreId,
