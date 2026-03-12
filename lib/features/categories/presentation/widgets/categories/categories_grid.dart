@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:pharmacist/features/categories/domain/models/category_model.dart';
 import 'package:pharmacist/features/categories/presentation/screens/category_products_screen.dart';
 import 'package:pharmacist/features/categories/presentation/widgets/category_card.dart';
 
 class CategoriesGrid extends StatelessWidget {
-  final List categories;
+  final List<CategoryModel> categories;
 
   const CategoriesGrid({super.key, required this.categories});
 
@@ -17,11 +18,11 @@ class CategoriesGrid extends StatelessWidget {
         if (width >= 1200) {
           crossAxisCount = 5;
         } else if (width >= 900) {
-          crossAxisCount = 4; 
+          crossAxisCount = 4;
         } else if (width >= 600) {
-          crossAxisCount = 3; 
+          crossAxisCount = 3;
         } else {
-          crossAxisCount = 2; 
+          crossAxisCount = 2;
         }
 
         return GridView.builder(
@@ -37,13 +38,13 @@ class CategoriesGrid extends StatelessWidget {
 
             return CategoryCard(
               name: category.name,
-              imageUrl: category.imageUrl,
+              imageUrl: category.logoUrl,
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (_) => CategoryProductsScreen(
                       categoryName: category.name,
-                      products: category.products,
+                      products: [], // fetch products later
                     ),
                   ),
                 );

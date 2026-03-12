@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pharmacist/core/app_color.dart';
+import 'package:pharmacist/features/categories/presentation/widgets/app_card_decoration.dart';
 
 class CategoryCard extends StatelessWidget {
   final String name;
@@ -22,29 +22,7 @@ class CategoryCard extends StatelessWidget {
       onTap: onTap,
       borderRadius: BorderRadius.circular(20),
       child: Ink(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          gradient: LinearGradient(
-            colors: isDark
-                ? [
-                    AppColors.darkSurface,
-                    AppColors.darkBackground,
-                  ]
-                : [
-                    AppColors.white,
-                    AppColors.accentGreen.withValues(alpha: 0.6),
-                  ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.08),
-              blurRadius: 12,
-              offset: const Offset(0, 6),
-            ),
-          ],
-        ),
+        decoration: AppCardDecorations.categoryCard(isDark: isDark),
         child: Padding(
           padding: const EdgeInsets.all(12),
           child: Column(
@@ -53,20 +31,30 @@ class CategoryCard extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(16),
                   child: Container(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          AppColors.primaryblue.withValues(alpha: 0.8),
-                          AppColors.primaryLightColor.withValues(alpha: 0.8),
-                        ],
-                      ),
-                    ),
-                    child: const Center(
-                      child: Icon(
-                        Icons.category_rounded,
-                        size: 40,
-                        color: Colors.white,
-                      ),
+                    decoration: AppCardDecorations.imageOverlay(isDark: isDark),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
+                      child: imageUrl.isNotEmpty
+                          ? Image.network(
+                              imageUrl,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                return const Center(
+                                  child: Icon(
+                                    Icons.broken_image,
+                                    size: 40,
+                                    color: Colors.white,
+                                  ),
+                                );
+                              },
+                            )
+                          : const Center(
+                              child: Icon(
+                                Icons.category_rounded,
+                                size: 40,
+                                color: Colors.white,
+                              ),
+                            ),
                     ),
                   ),
                 ),
