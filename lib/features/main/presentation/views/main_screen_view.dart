@@ -6,6 +6,7 @@ import 'package:pharmacist/core/app_color.dart';
 import 'package:pharmacist/features/categories/presentation/screens/categories_screen.dart';
 import 'package:pharmacist/features/companies/presentation/screens/companies_screen.dart';
 import 'package:pharmacist/features/main/presentation/cubits/navigationcubit%20.dart';
+import 'package:pharmacist/features/orders/presentation/screens/orders_screen.dart';
 import 'package:pharmacist/main.dart';
 
 class MainScreenView extends StatelessWidget {
@@ -18,6 +19,7 @@ class MainScreenView extends StatelessWidget {
       CategoriesScreen(),
       CompaniesScreen(),
       MyHomePage(title: 'home'),
+      OrdersScreen(),
     ];
 
     return BlocProvider(
