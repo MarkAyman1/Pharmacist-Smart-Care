@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:pharmacist/features/companies/domain/models/company_model.dart';
-import 'package:pharmacist/features/companies/presentation/widgets/company_card.dart';
 import 'package:pharmacist/features/companies/presentation/screens/company_products_screen.dart';
+import 'package:pharmacist/features/companies/presentation/widgets/company_card.dart';
 
 class CompaniesGrid extends StatelessWidget {
-  final List<Company> companies;
+  final List<CompanyModel> companies;
 
   const CompaniesGrid({super.key, required this.companies});
 
@@ -16,13 +16,13 @@ class CompaniesGrid extends StatelessWidget {
 
         int crossAxisCount;
         if (width >= 1200) {
-          crossAxisCount = 5; 
+          crossAxisCount = 5;
         } else if (width >= 900) {
-          crossAxisCount = 4; 
+          crossAxisCount = 4;
         } else if (width >= 600) {
-          crossAxisCount = 3; 
+          crossAxisCount = 3;
         } else {
-          crossAxisCount = 2; 
+          crossAxisCount = 2;
         }
 
         return GridView.builder(
@@ -35,18 +35,19 @@ class CompaniesGrid extends StatelessWidget {
           itemCount: companies.length,
           itemBuilder: (context, index) {
             final company = companies[index];
+
             return CompanyCard(
-              name: company.name,
-              imageUrl: company.imageUrl,
+              company: company,
               onTap: () {
-                // Navigator.of(context).push(
-                //   MaterialPageRoute(
-                //     builder: (_) => CompanyProductsScreen(
-                //       companyName: company.name,
-                //       products: company.products,
-                //     ),
-                //   ),
-                // );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => CompanyProductsScreen(
+                      companyId: company.id,
+                      companyName: company.name,
+                    ),
+                  ),
+                );
               },
             );
           },

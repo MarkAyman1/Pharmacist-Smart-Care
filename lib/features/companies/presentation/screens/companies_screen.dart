@@ -1,44 +1,22 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:pharmacist/core/app_theme.dart';
-import 'package:pharmacist/core/styles/app_background.dart';
-import 'package:pharmacist/features/companies/domain/models/company_model.dart';
-import 'package:pharmacist/features/companies/presentation/widgets/companies/companies_header.dart';
-import 'package:pharmacist/features/companies/presentation/widgets/companies/companies_grid.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pharmacist/core/api/dio_consumer.dart';
+import 'package:pharmacist/features/companies/domain/repo/companies_repository.dart';
+import 'package:pharmacist/features/companies/presentation/bloc/companies_bloc.dart';
+import 'package:pharmacist/features/companies/presentation/bloc/companies_event.dart';
+import 'package:pharmacist/features/companies/presentation/widgets/companies/companies_screen_data.dart';
 
 class CompaniesScreen extends StatelessWidget {
   const CompaniesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
-    return Scaffold(
-      appBar: AppThemes.customAppBar(title: 'Companies', showBackButton: false, isDarkMode: isDark),
-      body: Container(
-        decoration: AppBackground.decoration(isDark: isDark),
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(
-                  maxWidth: 1200,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const CompaniesHeader(),
-                    const SizedBox(height: 16),
-                    Expanded(
-                      child: CompaniesGrid(companies: mockCompanies),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
+    return BlocProvider(
+      create: (_) =>
+          CompaniesBloc(CompaniesRepository(DioConsumer(Dio())))
+            ..add(FetchCompaniesEvent()),
+      child: const CompaniesScreenData(),
     );
   }
 }

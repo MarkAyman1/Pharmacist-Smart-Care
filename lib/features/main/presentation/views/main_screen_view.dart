@@ -55,7 +55,7 @@ class MainScreenView extends StatelessWidget {
               ),
               items: const [
                 TabItem(icon: LineIcons.box, title: 'categories'),
-                TabItem(icon: LineIcons.productHunt, title: 'products'),
+                TabItem(icon: LineIcons.building, title: 'companies'),
                 TabItem(icon: LineIcons.plusCircle, title: 'Add product'),
                 TabItem(icon: LineIcons.receipt, title: 'Orders'),
               ],
