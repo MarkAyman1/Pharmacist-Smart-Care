@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:pharmacist/core/api/api_consumer.dart';
 import 'package:pharmacist/core/api/failure.dart';
 import 'package:pharmacist/features/categories/domain/models/category_model.dart';
-import 'package:pharmacist/features/categories/domain/models/pagination_model.dart';
+import 'package:pharmacist/features/products/model/pagination_model.dart';
 
 class CategoriesRepository {
   final ApiConsumer apiConsumer;
