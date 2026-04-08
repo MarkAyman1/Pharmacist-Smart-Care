@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 import 'package:pharmacist/features/companies/domain/models/company_model.dart';
-import 'package:pharmacist/features/products/model/pagination_model.dart';
 
 abstract class CompaniesState extends Equatable {
   const CompaniesState();
@@ -29,18 +28,4 @@ class CompaniesError extends CompaniesState {
 
   @override
   List<Object?> get props => [message];
-}
-
-class ProductsLoading extends CompaniesState {}
-
-class ProductsLoaded extends CompaniesState {
-  final PaginatedProducts products;
-
-  const ProductsLoaded(this.products);
-}
-
-class StockUpdated extends CompaniesState {
-  final String message;
-
-  const StockUpdated(this.message);
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pharmacist/core/app_color.dart';
-import 'package:pharmacist/features/products/presentation/product_actions.dart';
-import 'package:pharmacist/features/products/presentation/product_image.dart';
-import 'package:pharmacist/features/products/presentation/product_info.dart';
+import 'package:pharmacist/features/products/presentation/widgets/product_actions.dart';
+import 'package:pharmacist/features/products/presentation/widgets/product_image.dart';
+import 'package:pharmacist/features/products/presentation/widgets/product_info.dart';
 
 class ProductCard extends StatelessWidget {
   final String nameEn;

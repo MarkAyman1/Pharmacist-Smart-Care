@@ -4,22 +4,21 @@ import 'package:pharmacist/features/products/presentation/bloc/products_bloc.dar
 import 'package:pharmacist/features/products/presentation/bloc/products_event.dart';
 import 'package:pharmacist/features/products/presentation/bloc/products_state.dart';
 import 'package:pharmacist/features/products/presentation/widgets/products_list.dart';
+import 'company_products_listener.dart';
 
-import 'category_products_listener.dart';
+class CompanyProductsBody extends StatelessWidget {
+  final String companyId;
 
-class CategoryProductsBody extends StatelessWidget {
-  final String categoryId;
-
-  const CategoryProductsBody({
+  const CompanyProductsBody({
     super.key,
-    required this.categoryId,
+    required this.companyId,
   });
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ProductsBloc, ProductsState>(
       listener: (context, state) {
-        handleCategoryProductsListener(context, state, categoryId);
+        handleCompanyProductsListener(context, state, companyId);
       },
       builder: (context, state) {
         if (state is ProductsLoading) {
@@ -35,8 +34,8 @@ class CategoryProductsBody extends StatelessWidget {
             // Next
             onNext: () {
               context.read<ProductsBloc>().add(
-                FetchProductsByCategoryEvent(
-                  categoryId: categoryId,
+                FetchProductsByCompanyEvent(
+                  companyId: companyId,
                   pageNumber: state.products.pageNumber + 1,
                 ),
               );
@@ -46,8 +45,8 @@ class CategoryProductsBody extends StatelessWidget {
             onPrevious: () {
               if (state.products.pageNumber > 1) {
                 context.read<ProductsBloc>().add(
-                  FetchProductsByCategoryEvent(
-                    categoryId: categoryId,
+                  FetchProductsByCompanyEvent(
+                    companyId: companyId,
                     pageNumber: state.products.pageNumber - 1,
                   ),
                 );
