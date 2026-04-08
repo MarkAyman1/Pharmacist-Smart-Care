@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:pharmacist/features/categories/presentation/widgets/app_card_decoration.dart';
 
@@ -35,18 +36,29 @@ class CategoryCard extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(16),
                       child: imageUrl.isNotEmpty
-                          ? Image.network(
-                              imageUrl,
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) {
-                                return const Center(
+                          ? CachedNetworkImage(
+                              imageUrl: imageUrl,
+                              httpHeaders: {
+                                "User-Agent": "Mozilla/5.0",
+                                "Referer": "https://yourwebsite.com",
+                              },
+                              fit: BoxFit
+                                  .cover, // makes the image cover its container
+                              placeholder: (context, url) => const Center(
+                                child: CircularProgressIndicator(),
+                              ),
+                              errorWidget: (context, url, error) => Container(
+                                color: Colors
+                                    .grey
+                                    .shade300, 
+                                child: const Center(
                                   child: Icon(
                                     Icons.broken_image,
-                                    size: 40,
-                                    color: Colors.white,
+                                    size: 40, 
+                                    color: Colors.grey,
                                   ),
-                                );
-                              },
+                                ),
+                              ),
                             )
                           : const Center(
                               child: Icon(

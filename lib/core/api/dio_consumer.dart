@@ -55,10 +55,17 @@ class DioConsumer implements ApiConsumer {
   }
 
   @override
-  Future<Response> patch(String endpoint,
-      {dynamic body}) {
-    return dio.patch(endpoint, data: body);
-  }
+Future<Response> patch(
+  String endpoint, {
+  dynamic body,
+  Map<String, dynamic>? queryParameters,
+}) {
+  return dio.patch(
+    endpoint,
+    data: body,
+    queryParameters: queryParameters,
+  );
+}
 
   @override
   Future<Response> delete(String endpoint,

@@ -19,9 +19,10 @@ abstract class ApiConsumer {
   });
 
   Future<Response> patch(
-    String endpoint, {
-    dynamic body,
-  });
+  String endpoint, {
+  dynamic body,
+  Map<String, dynamic>? queryParameters,
+});
 
   Future<Response> delete(
     String endpoint, {

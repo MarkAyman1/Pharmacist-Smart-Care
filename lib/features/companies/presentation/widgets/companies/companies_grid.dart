@@ -39,14 +39,14 @@ class CompaniesGrid extends StatelessWidget {
               name: company.name,
               imageUrl: company.imageUrl,
               onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (_) => CompanyProductsScreen(
-                      companyName: company.name,
-                      products: company.products,
-                    ),
-                  ),
-                );
+                // Navigator.of(context).push(
+                //   MaterialPageRoute(
+                //     builder: (_) => CompanyProductsScreen(
+                //       companyName: company.name,
+                //       products: company.products,
+                //     ),
+                //   ),
+                // );
               },
             );
           },

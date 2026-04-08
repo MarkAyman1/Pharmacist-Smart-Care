@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:pharmacist/features/categories/domain/models/category_model.dart';
+import 'package:pharmacist/features/categories/domain/models/pagination_model.dart';
 
 abstract class CategoriesState extends Equatable {
   const CategoriesState();
@@ -28,4 +29,18 @@ class CategoriesError extends CategoriesState {
 
   @override
   List<Object?> get props => [message];
+}
+
+class ProductsLoading extends CategoriesState {}
+
+class ProductsLoaded extends CategoriesState {
+  final PaginatedProducts products;
+
+  const ProductsLoaded(this.products);
+}
+
+class StockUpdated extends CategoriesState {
+  final String message;
+
+  const StockUpdated(this.message);
 }
