@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pharmacist/features/products/model/product_model.dart';
-import 'package:pharmacist/features/categories/presentation/bloc/categories_bloc.dart';
-import 'package:pharmacist/features/categories/presentation/bloc/categories_event.dart';
-import 'package:pharmacist/features/products/presentation/product_card.dart';
-import 'package:pharmacist/features/products/presentation/quantity_dialog.dart';
+import 'package:pharmacist/features/products/domain/model/product_model.dart';
+import 'package:pharmacist/features/products/presentation/bloc/products_bloc.dart';
+import 'package:pharmacist/features/products/presentation/bloc/products_event.dart';
+import 'package:pharmacist/features/products/presentation/widgets/product_card.dart';
+import 'package:pharmacist/features/products/presentation/widgets/quantity_dialog.dart';
 
 class ProductsList extends StatelessWidget {
   final List<ProductModel> products;
@@ -52,7 +52,7 @@ class ProductsList extends StatelessWidget {
                   );
 
                   if (value != null && value > 0) {
-                    context.read<CategoriesBloc>().add(
+                    context.read<ProductsBloc>().add(
                       IncreaseStockEvent(
                         productId: product.productId,
                         quantity: value,
@@ -69,7 +69,7 @@ class ProductsList extends StatelessWidget {
                   );
 
                   if (value != null && value > 0) {
-                    context.read<CategoriesBloc>().add(
+                    context.read<ProductsBloc>().add(
                       DecreaseStockEvent(
                         productId: product.productId,
                         quantity: value,

@@ -4,10 +4,10 @@ import 'package:pharmacist/features/products/presentation/bloc/products_bloc.dar
 import 'package:pharmacist/features/products/presentation/bloc/products_event.dart';
 import 'package:pharmacist/features/products/presentation/bloc/products_state.dart';
 
-void handleCategoryProductsListener(
+void handleCompanyProductsListener(
   BuildContext context,
   ProductsState state,
-  String categoryId,
+  String companyId,
 ) {
   if (state is StockUpdated) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -22,8 +22,8 @@ void handleCategoryProductsListener(
 
     if (currentState is ProductsLoaded) {
       context.read<ProductsBloc>().add(
-        FetchProductsByCategoryEvent(
-          categoryId: categoryId,
+        FetchProductsByCompanyEvent(
+          companyId: companyId,
           pageNumber: currentState.products.pageNumber,
         ),
       );

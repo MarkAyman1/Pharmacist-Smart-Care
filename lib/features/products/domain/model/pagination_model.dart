@@ -1,4 +1,4 @@
-import 'package:pharmacist/features/products/model/product_model.dart';
+import 'package:pharmacist/features/products/domain/model/product_model.dart';
 
 class PaginatedProducts {
   final List<ProductModel> items;
