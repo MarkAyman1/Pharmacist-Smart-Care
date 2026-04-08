@@ -44,7 +44,7 @@ class CategoriesGrid extends StatelessWidget {
                   MaterialPageRoute(
                     builder: (_) => CategoryProductsScreen(
                       categoryName: category.name,
-                      products: [], // fetch products later
+                      categoryId: category.id,
                     ),
                   ),
                 );
