@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:pharmacist/features/categories/domain/models/category_model.dart';
-import 'package:pharmacist/features/categories/domain/models/pagination_model.dart';
+import 'package:pharmacist/features/products/model/pagination_model.dart';
 
 abstract class CategoriesState extends Equatable {
   const CategoriesState();
