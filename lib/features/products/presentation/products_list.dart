@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pharmacist/features/products/model/product_model.dart';
 import 'package:pharmacist/features/categories/presentation/bloc/categories_bloc.dart';
 import 'package:pharmacist/features/categories/presentation/bloc/categories_event.dart';
-import 'package:pharmacist/features/companies/presentation/widgets/products/quantity_dialog.dart';
 import 'package:pharmacist/features/products/presentation/product_card.dart';
+import 'package:pharmacist/features/products/presentation/quantity_dialog.dart';
 
 class ProductsList extends StatelessWidget {
   final List<ProductModel> products;

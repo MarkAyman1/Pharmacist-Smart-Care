@@ -1,0 +1,46 @@
+import 'package:equatable/equatable.dart';
+import 'package:pharmacist/features/companies/domain/models/company_model.dart';
+import 'package:pharmacist/features/products/model/pagination_model.dart';
+
+abstract class CompaniesState extends Equatable {
+  const CompaniesState();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class CompaniesInitial extends CompaniesState {}
+
+class CompaniesLoading extends CompaniesState {}
+
+class CompaniesLoaded extends CompaniesState {
+  final List<CompanyModel> companies;
+
+  const CompaniesLoaded({required this.companies});
+
+  @override
+  List<Object?> get props => [companies];
+}
+
+class CompaniesError extends CompaniesState {
+  final String message;
+
+  const CompaniesError({required this.message});
+
+  @override
+  List<Object?> get props => [message];
+}
+
+class ProductsLoading extends CompaniesState {}
+
+class ProductsLoaded extends CompaniesState {
+  final PaginatedProducts products;
+
+  const ProductsLoaded(this.products);
+}
+
+class StockUpdated extends CompaniesState {
+  final String message;
+
+  const StockUpdated(this.message);
+}
