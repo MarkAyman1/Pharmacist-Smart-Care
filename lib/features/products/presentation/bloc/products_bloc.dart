@@ -54,7 +54,8 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
 
         final currentState = state;
 
-        if (currentState is ProductsLoaded) {
+        if (currentState is ProductsLoaded ||
+            currentState is ProductsSearchLoaded) {
           emit(StockUpdated("Stock increased successfully"));
 
           // رجّع نفس الداتا تاني
@@ -74,12 +75,30 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
 
         final currentState = state;
 
-        if (currentState is ProductsLoaded) {
+        if (currentState is ProductsLoaded ||
+            currentState is ProductsSearchLoaded) {
           emit(StockUpdated("Stock decreased successfully"));
           emit(currentState);
         }
       } catch (e) {
         emit(ProductsError(message: e.toString()));
+      }
+    });
+    on<SearchProductsByNameEvent>((event, emit) async {
+      emit(ProductsLoading());
+
+      try {
+        final products = await repository.searchProductsByName(
+          productName: event.productName,
+        );
+
+        emit(ProductsSearchLoaded(products));
+      } catch (e) {
+        if (e is ServiceFailure) {
+          emit(ProductsError(message: e.message));
+        } else {
+          emit(const ProductsError(message: "Unexpected error"));
+        }
       }
     });
   }

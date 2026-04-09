@@ -10,16 +10,16 @@ class ProductsList extends StatelessWidget {
   final List<ProductModel> products;
   final bool hasNext;
   final int currentPage;
-  final VoidCallback onNext;
-  final VoidCallback onPrevious;
+  final VoidCallback? onNext;
+  final VoidCallback? onPrevious;
 
   const ProductsList({
     super.key,
     required this.products,
     required this.hasNext,
     required this.currentPage,
-    required this.onNext,
-    required this.onPrevious,
+    this.onNext,
+    this.onPrevious,
   });
 
   @override
@@ -83,20 +83,21 @@ class ProductsList extends StatelessWidget {
         ),
 
         /// Pagination Buttons
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            ElevatedButton(
-              onPressed: currentPage > 1 ? onPrevious : null,
-              child: const Text("Previous"),
-            ),
-            Text("Page $currentPage"),
-            ElevatedButton(
-              onPressed: hasNext ? onNext : null,
-              child: const Text("Next"),
-            ),
-          ],
-        ),
+        if (onNext != null || onPrevious != null)
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              ElevatedButton(
+                onPressed: currentPage > 1 ? onPrevious : null,
+                child: const Text("Previous"),
+              ),
+              Text("Page $currentPage"),
+              ElevatedButton(
+                onPressed: hasNext ? onNext : null,
+                child: const Text("Next"),
+              ),
+            ],
+          ),
       ],
     );
   }

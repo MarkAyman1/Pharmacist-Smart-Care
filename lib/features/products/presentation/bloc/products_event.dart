@@ -59,3 +59,13 @@ class DecreaseStockEvent extends ProductsEvent {
   @override
   List<Object?> get props => [productId, quantity];
 }
+
+// ====== Search products by name ======
+class SearchProductsByNameEvent extends ProductsEvent {
+  final String productName;
+
+  const SearchProductsByNameEvent({required this.productName});
+
+  @override
+  List<Object?> get props => [productName];
+}

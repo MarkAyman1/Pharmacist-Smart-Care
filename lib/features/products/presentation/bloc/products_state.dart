@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:pharmacist/features/products/domain/model/pagination_model.dart';
+import 'package:pharmacist/features/products/domain/model/product_model.dart';
 
 abstract class ProductsState extends Equatable {
   const ProductsState();
@@ -39,4 +40,14 @@ class ProductsError extends ProductsState {
 
   @override
   List<Object?> get props => [message];
+}
+
+//=====search=====
+class ProductsSearchLoaded extends ProductsState {
+  final List<ProductModel> products;
+
+  const ProductsSearchLoaded(this.products);
+
+  @override
+  List<Object?> get props => [products];
 }
