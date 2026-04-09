@@ -3,11 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:pharmacist/core/app_color.dart';
+import 'package:pharmacist/features/Search/presentation/screen/search_screen.dart';
 import 'package:pharmacist/features/categories/presentation/screens/categories_screen.dart';
 import 'package:pharmacist/features/companies/presentation/screens/companies_screen.dart';
 import 'package:pharmacist/features/main/presentation/cubits/navigationcubit%20.dart';
 import 'package:pharmacist/features/orders/presentation/screens/orders_screen.dart';
-import 'package:pharmacist/main.dart';
 
 class MainScreenView extends StatelessWidget {
   const MainScreenView({super.key});
@@ -18,7 +18,7 @@ class MainScreenView extends StatelessWidget {
     final List<Widget> _screens = const [
       CategoriesScreen(),
       CompaniesScreen(),
-      MyHomePage(title: 'home'),
+      SearchScreen(),
       OrdersScreen(),
     ];
 
@@ -56,7 +56,7 @@ class MainScreenView extends StatelessWidget {
               items: const [
                 TabItem(icon: LineIcons.box, title: 'categories'),
                 TabItem(icon: LineIcons.building, title: 'companies'),
-                TabItem(icon: LineIcons.plusCircle, title: 'Add product'),
+                TabItem(icon: LineIcons.search, title: 'Search'),
                 TabItem(icon: LineIcons.receipt, title: 'Orders'),
               ],
             ),
