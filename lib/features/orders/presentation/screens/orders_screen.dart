@@ -1,35 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:pharmacist/core/app_theme.dart';
 import 'package:pharmacist/core/styles/app_background.dart';
-import 'package:pharmacist/features/orders/presentation/screens/order_details_screen.dart';
-import '../widgets/order_card.dart';
+import '../widgets/orders_filter_tabs.dart';
+import '../widgets/orders_list.dart';
 
-class OrdersScreen extends StatelessWidget {
+class OrdersScreen extends StatefulWidget {
   const OrdersScreen({super.key});
+
+  @override
+  State<OrdersScreen> createState() => _OrdersScreenState();
+}
+
+class _OrdersScreenState extends State<OrdersScreen> {
+  String selectedType = "Delivery";
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      appBar: AppThemes.customAppBar(title: "Orders", isDarkMode: isDark),
+      appBar: AppThemes.customAppBar(
+        title: "Orders",
+        isDarkMode: isDark,
+      ),
       body: Container(
         decoration: AppBackground.decoration(isDark: isDark),
-        child: ListView.builder(
-          padding: const EdgeInsets.fromLTRB(16, 20, 16, 40),
-          itemCount: 10,
-          itemBuilder: (context, index) {
-            return OrderCard(
-              clientName: "Ahmed Mohamed",
-              status: "Preparing",
-              type: "Delivery",
-              totalPrice: 320,
-              itemsCount: 3,
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const OrderDetailsScreen(),));
+        child: Column(
+          children: [
+            const SizedBox(height: 16),
+
+            /// 🔥 FILTER TABS
+            OrdersFilterTabs(
+              selected: selectedType,
+              onChanged: (value) {
+                setState(() {
+                  selectedType = value;
+                });
               },
-            );
-          },
+            ),
+
+            /// 🔥 LIST
+            Expanded(
+              child: OrdersList(filterType: selectedType),
+            ),
+          ],
         ),
       ),
     );
