@@ -1,35 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:pharmacist/core/app_color.dart';
+import 'package:pharmacist/features/orders/presentation/utils/order_status_mapper.dart';
 
 class OrderStatusBadge extends StatelessWidget {
-  final String status;
-
   const OrderStatusBadge({super.key, required this.status});
 
-  Color _color() {
-    switch (status) {
-      case "Completed":
-        return Colors.green;
-      case "Pending":
-        return Colors.orange;
-      case "Cancelled":
-        return Colors.red;
-      default:
-        return AppColors.primaryblue;
-    }
-  }
+  final String status;
 
   @override
   Widget build(BuildContext context) {
+    final code = OrderStatusMapper.codeFromApiStatus(status);
+    final color = OrderStatusMapper.accentColorForStatusCode(code);
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
-        color: _color().withValues(alpha: 0.15),
+        color: color.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(20),
       ),
       child: Text(
         status,
-        style: TextStyle(color: _color(), fontWeight: FontWeight.bold),
+        style: TextStyle(color: color, fontWeight: FontWeight.bold),
       ),
     );
   }
