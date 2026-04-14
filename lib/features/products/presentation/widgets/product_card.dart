@@ -13,6 +13,7 @@ class ProductCard extends StatelessWidget {
   final double discount;
   final double rating;
   final int quantity;
+  final int stockquantity;
   final bool isAvailable;
   final String dosageForm;
   final VoidCallback onIncrease;
@@ -28,6 +29,7 @@ class ProductCard extends StatelessWidget {
     required this.discount,
     required this.rating,
     required this.quantity,
+    required this.stockquantity,
     required this.isAvailable,
     required this.dosageForm,
     required this.onIncrease,
@@ -68,6 +70,7 @@ class ProductCard extends StatelessWidget {
               discount: discount,
               rating: rating,
               quantity: quantity,
+              stockquantity: stockquantity,
               isAvailable: isAvailable,
               dosageForm: dosageForm,
             ),

@@ -42,6 +42,7 @@ class ProductsList extends StatelessWidget {
                 discount: product.discountPercentage,
                 rating: product.averageRating,
                 quantity: product.availableStock,
+                stockquantity: product.stockQuantity,
                 isAvailable: product.isAvailable,
                 dosageForm: product.dosageForm,
                 onIncrease: () async {

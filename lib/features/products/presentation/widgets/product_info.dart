@@ -9,6 +9,7 @@ class ProductInfo extends StatelessWidget {
   final double discount;
   final double rating;
   final int quantity;
+  final int stockquantity;
   final bool isAvailable;
   final String dosageForm;
 
@@ -21,6 +22,7 @@ class ProductInfo extends StatelessWidget {
     required this.discount,
     required this.rating,
     required this.quantity,
+    required this.stockquantity,
     required this.isAvailable,
     required this.dosageForm,
   });
@@ -86,7 +88,13 @@ class ProductInfo extends StatelessWidget {
           style: TextStyle(color: isAvailable ? Colors.green : Colors.red),
         ),
 
-        Text("Stock: $quantity"),
+        Row(
+          children: [
+            Text("Stock: $quantity"),
+            const Spacer(),
+            Text("Available: $stockquantity"),
+          ],
+        ),
       ],
     );
   }
