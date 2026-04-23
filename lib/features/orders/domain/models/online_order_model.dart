@@ -11,6 +11,7 @@ class OnlineOrderModel {
   final String deliveryAddress;
   final String additionalInfo;
   final List<OrderItemModel> items;
+  final bool isPaid;
 
   OnlineOrderModel({
     required this.orderId,
@@ -23,6 +24,7 @@ class OnlineOrderModel {
     required this.deliveryAddress,
     required this.additionalInfo,
     required this.items,
+    required this.isPaid,
   });
 
   factory OnlineOrderModel.fromJson(Map<String, dynamic> json) {
@@ -33,13 +35,13 @@ class OnlineOrderModel {
       totalPrice: (json['totalPrice'] as num).toDouble(),
       status: json['status'],
       orderDate: DateTime.parse(json['orderDate']),
-      distanceFromBranch:
-          (json['distanceFromBranch'] as num).toDouble(),
+      distanceFromBranch: (json['distanceFromBranch'] as num).toDouble(),
       deliveryAddress: json['deliveryAddress'],
       additionalInfo: json['additionalInfo'],
       items: (json['items'] as List)
           .map((e) => OrderItemModel.fromJson(e))
           .toList(),
+      isPaid: json['is_paid'] as bool,
     );
   }
 }
