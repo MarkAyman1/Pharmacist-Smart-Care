@@ -25,3 +25,10 @@ class UpdateOrderStatus extends OrdersEvent {
     required this.isOnlineOrder,
   });
 }
+
+class VerifyPickupCode extends OrdersEvent {
+  final String orderId;
+  final String code;
+
+  VerifyPickupCode({required this.orderId, required this.code});
+}

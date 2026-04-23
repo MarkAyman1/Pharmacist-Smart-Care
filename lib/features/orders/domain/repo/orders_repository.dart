@@ -52,8 +52,25 @@ class OrdersRepository {
     required int status,
   }) async {
     await api.patch(
-      '/api/admin/orders/update-status/$id',
+      '/api/Pharmacist/orders/update-status/$id',
       queryParameters: {'newStatus': status},
     );
+  }
+
+  // ===== verify pickup code =====
+  Future<bool> verifyPickupCode({
+    required String orderId,
+    required String code,
+  }) async {
+    final response = await api.post(
+      '/api/Pharmacist/orders/verify-pickup-code',
+      queryParameters: {'OrderId': orderId, 'VerifyCode': code.toString()},
+    );
+
+    if (response.data['succeeded'] == true) {
+      return response.data['data'] as bool;
+    } else {
+      throw Exception(response.data['message']);
+    }
   }
 }

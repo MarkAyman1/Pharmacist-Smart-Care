@@ -9,6 +9,7 @@ abstract class ApiConsumer {
   Future<Response> post(
     String endpoint, {
     dynamic body,
+    Map<String, dynamic>? queryParameters, 
     bool isFormData = false,
   });
 

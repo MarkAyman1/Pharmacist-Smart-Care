@@ -20,56 +20,58 @@ class DioConsumer implements ApiConsumer {
 
     if (kDebugMode) {
       dio.interceptors.add(
-        LogInterceptor(
-          requestBody: true,
-          responseBody: true,
-        ),
+        LogInterceptor(requestBody: true, responseBody: true),
       );
     }
 
     if (!kIsWeb && dio.httpClientAdapter is IOHttpClientAdapter) {
-    (dio.httpClientAdapter as IOHttpClientAdapter).onHttpClientCreate = (client) {
-      client.badCertificateCallback =
-          (X509Certificate cert, String host, int port) => true;
-      return client;
-    };
-  }
+      (dio.httpClientAdapter as IOHttpClientAdapter).onHttpClientCreate =
+          (client) {
+            client.badCertificateCallback =
+                (X509Certificate cert, String host, int port) => true;
+            return client;
+          };
+    }
   }
 
   @override
-  Future<Response> get(String endpoint,
-      {Map<String, dynamic>? queryParameters}) {
+  Future<Response> get(
+    String endpoint, {
+    Map<String, dynamic>? queryParameters,
+  }) {
     return dio.get(endpoint, queryParameters: queryParameters);
   }
 
   @override
-  Future<Response> post(String endpoint,
-      {dynamic body, bool isFormData = false}) {
-    return dio.post(endpoint, data: body);
+  Future<Response> post(
+    String endpoint, {
+    dynamic body,
+    Map<String, dynamic>? queryParameters,
+    bool isFormData = false,
+  }) {
+    return dio.post(endpoint, data: body, queryParameters: queryParameters);
   }
 
   @override
-  Future<Response> put(String endpoint,
-      {dynamic body, bool isFormData = false}) {
+  Future<Response> put(
+    String endpoint, {
+    dynamic body,
+    bool isFormData = false,
+  }) {
     return dio.put(endpoint, data: body);
   }
 
   @override
-Future<Response> patch(
-  String endpoint, {
-  dynamic body,
-  Map<String, dynamic>? queryParameters,
-}) {
-  return dio.patch(
-    endpoint,
-    data: body,
-    queryParameters: queryParameters,
-  );
-}
+  Future<Response> patch(
+    String endpoint, {
+    dynamic body,
+    Map<String, dynamic>? queryParameters,
+  }) {
+    return dio.patch(endpoint, data: body, queryParameters: queryParameters);
+  }
 
   @override
-  Future<Response> delete(String endpoint,
-      {dynamic body}) {
+  Future<Response> delete(String endpoint, {dynamic body}) {
     return dio.delete(endpoint, data: body);
   }
 }
