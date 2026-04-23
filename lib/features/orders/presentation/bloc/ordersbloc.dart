@@ -14,8 +14,9 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
   OrdersBloc(this.repo) : super(OrdersInitial()) {
     // ===== ONLINE =====
     on<GetOnlineOrders>((event, emit) async {
-      final OnlineOrdersLoaded? previousOnline =
-          state is OnlineOrdersLoaded ? state as OnlineOrdersLoaded : null;
+      final OnlineOrdersLoaded? previousOnline = state is OnlineOrdersLoaded
+          ? state as OnlineOrdersLoaded
+          : null;
 
       if (!event.append) {
         emit(OrdersLoading());
@@ -50,8 +51,9 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
 
     // ===== PICKUP =====
     on<GetPickupOrders>((event, emit) async {
-      final PickupOrdersLoaded? previousPickup =
-          state is PickupOrdersLoaded ? state as PickupOrdersLoaded : null;
+      final PickupOrdersLoaded? previousPickup = state is PickupOrdersLoaded
+          ? state as PickupOrdersLoaded
+          : null;
 
       if (!event.append) {
         emit(OrdersLoading());
@@ -101,6 +103,28 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
           emit(OrdersError(ServiceFailure.fromDio(e).message));
         } else {
           emit(OrdersError("Unexpected error"));
+        }
+      }
+    });
+
+    // ===== verify pickup code =====
+    on<VerifyPickupCode>((event, emit) async {
+      emit(VerifyPickupCodeLoading());
+      try {
+        final success = await repo.verifyPickupCode(
+          orderId: event.orderId,
+          code: event.code,
+        );
+        if (success) {
+          emit(VerifyPickupCodeSuccess("Pickup code verified successfully"));
+        } else {
+          emit(VerifyPickupCodeError("Invalid pickup code"));
+        }
+      } catch (e) {
+        if (e is DioException) {
+          emit(VerifyPickupCodeError(ServiceFailure.fromDio(e).message));
+        } else {
+          emit(VerifyPickupCodeError("Unexpected error"));
         }
       }
     });

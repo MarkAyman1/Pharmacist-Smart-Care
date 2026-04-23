@@ -42,12 +42,32 @@ class ServiceFailure extends Failure {
     final data = response.data;
 
     if (data is Map<String, dynamic>) {
-      //  لو فيه validation errors
+      // Handle errorsBag (like {"VerifyCode": ["message1", "message2"]})
+      if (data.containsKey("errorsBag")) {
+        final errorsBag = data["errorsBag"];
+
+        if (errorsBag is Map<String, dynamic>) {
+          // Get all error messages from all keys
+          final allMessages = <String>[];
+          for (final errors in errorsBag.values) {
+            if (errors is List) {
+              allMessages.addAll(errors.map((e) => e.toString()));
+            } else if (errors is String) {
+              allMessages.add(errors);
+            }
+          }
+          if (allMessages.isNotEmpty) {
+            return allMessages.join('\n');
+          }
+        }
+      }
+
+      // Handle standard errors (like {"errors": {"field": ["message"]}})
       if (data.containsKey("errors")) {
         final errors = data["errors"];
 
         if (errors is Map<String, dynamic>) {
-          // نجيب أول error في أول key
+          // Get first error from first key
           final firstError = errors.values.first;
 
           if (firstError is List && firstError.isNotEmpty) {
@@ -56,7 +76,7 @@ class ServiceFailure extends Failure {
         }
       }
 
-      //  لو فيه message عادي
+      // Handle message
       if (data.containsKey("message")) {
         return data["message"].toString();
       }

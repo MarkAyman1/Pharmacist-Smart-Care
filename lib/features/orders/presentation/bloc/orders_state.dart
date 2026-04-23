@@ -27,3 +27,16 @@ class PickupOrdersLoaded extends OrdersState {
 
 // UPDATE
 class OrderStatusUpdated extends OrdersState {}
+
+//verify pickup code
+class VerifyPickupCodeLoading extends OrdersState {}
+
+class VerifyPickupCodeSuccess extends OrdersState {
+  final String message;
+  VerifyPickupCodeSuccess(this.message);
+}
+
+class VerifyPickupCodeError extends OrdersState {
+  final String message;
+  VerifyPickupCodeError(this.message);
+}
