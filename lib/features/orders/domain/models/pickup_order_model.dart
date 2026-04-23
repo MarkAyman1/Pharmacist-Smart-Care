@@ -9,6 +9,7 @@ class PickupOrderModel {
   final DateTime orderDate;
   final String pickupCode;
   final List<OrderItemModel> items;
+  final bool isPaid;
 
   PickupOrderModel({
     required this.orderId,
@@ -19,6 +20,7 @@ class PickupOrderModel {
     required this.orderDate,
     required this.pickupCode,
     required this.items,
+    required this.isPaid,
   });
 
   factory PickupOrderModel.fromJson(Map<String, dynamic> json) {
@@ -33,6 +35,7 @@ class PickupOrderModel {
       items: (json['items'] as List)
           .map((e) => OrderItemModel.fromJson(e))
           .toList(),
+      isPaid: json['is_paid'] as bool,
     );
   }
 }

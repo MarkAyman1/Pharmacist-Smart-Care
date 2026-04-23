@@ -4,6 +4,7 @@ import 'package:pharmacist/features/orders/domain/models/pickup_order_model.dart
 import 'package:pharmacist/features/orders/presentation/widgets/order_details/order_client_hero_header.dart';
 import 'package:pharmacist/features/orders/presentation/widgets/order_details/order_details_action_section.dart';
 import 'package:pharmacist/features/orders/presentation/widgets/order_details/order_items_section.dart';
+import 'package:pharmacist/features/orders/presentation/widgets/order_details/payment_status_widget.dart';
 import 'package:pharmacist/features/orders/presentation/widgets/order_status_stepper.dart';
 
 class PickupOrderDetailsContent extends StatelessWidget {
@@ -30,6 +31,7 @@ class PickupOrderDetailsContent extends StatelessWidget {
           orderDateLabel: dateFmt.format(order.orderDate.toLocal()),
         ),
         OrderStatusStepper(currentStatus: order.status),
+        PaymentStatusWidget(isPaid: order.isPaid, status: order.status),
         OrderItemsSection(items: order.items),
         OrderDetailsActionSection(
           total: order.totalPrice,

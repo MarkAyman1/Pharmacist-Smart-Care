@@ -5,6 +5,7 @@ import 'package:pharmacist/features/orders/presentation/widgets/order_details/or
 import 'package:pharmacist/features/orders/presentation/widgets/order_details/order_online_info_section.dart';
 import 'package:pharmacist/features/orders/presentation/widgets/order_details/order_details_action_section.dart';
 import 'package:pharmacist/features/orders/presentation/widgets/order_details/order_items_section.dart';
+import 'package:pharmacist/features/orders/presentation/widgets/order_details/payment_status_widget.dart';
 import 'package:pharmacist/features/orders/presentation/widgets/order_status_stepper.dart';
 
 class OnlineOrderDetailsContent extends StatelessWidget {
@@ -31,6 +32,7 @@ class OnlineOrderDetailsContent extends StatelessWidget {
           orderDateLabel: dateFmt.format(order.orderDate.toLocal()),
         ),
         OrderStatusStepper(currentStatus: order.status),
+        PaymentStatusWidget(isPaid: order.isPaid, status: order.status),
         OrderOnlineInfoSection(order: order),
         OrderItemsSection(items: order.items),
         OrderDetailsActionSection(
