@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pharmacist/core/app_color.dart';
+import 'package:pharmacist/core/widgets/profile_icon_button.dart';
 import 'package:pharmacist/core/widgets/theme_toggle_button.dart';
-import 'package:pharmacist/main.dart';
 
 // Defines the text styles for both light and dark typography
 const TextTheme appTextTheme = TextTheme(
@@ -176,12 +176,7 @@ class AppThemes {
           fontWeight: FontWeight.bold,
         ),
       ),
-      leading: showBackButton
-          ? IconButton(
-              icon: const Icon(Icons.arrow_back, color: Colors.white),
-              onPressed: () => Navigator.of(navigatorKey.currentContext!).pop(),
-            )
-          : null,
+      leading: const ProfileIconButton(),
       actions: [
         ThemeToggleButton(),
         if (trailing != null) trailing,
