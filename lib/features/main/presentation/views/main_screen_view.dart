@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:pharmacist/core/app_color.dart';
+import 'package:pharmacist/core/widgets/profile_drawer.dart';
 import 'package:pharmacist/features/Search/presentation/screen/search_screen.dart';
 import 'package:pharmacist/features/categories/presentation/screens/categories_screen.dart';
 import 'package:pharmacist/features/companies/presentation/screens/companies_screen.dart';
@@ -15,7 +16,7 @@ class MainScreenView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final List<Widget> _screens = const [
+    final screens = const [
       CategoriesScreen(),
       CompaniesScreen(),
       SearchScreen(),
@@ -26,39 +27,41 @@ class MainScreenView extends StatelessWidget {
       create: (_) => NavigationCubit(),
       child: BlocBuilder<NavigationCubit, int>(
         builder: (context, currentIndex) {
-          return Scaffold(
-            body: IndexedStack(index: currentIndex, children: _screens),
-            bottomNavigationBar: ConvexAppBar(
-              style: TabStyle.reactCircle,
-              backgroundColor: !isDark
-                  ? AppColors.primaryblue
-                  : AppColors.darkBackground,
-              color: AppColors.white,
-              elevation: 12,
-              curveSize: 90,
-              height: 65,
-              initialActiveIndex: currentIndex,
-              onTap: (index) =>
-                  context.read<NavigationCubit>().changeIndex(index),
-              activeColor: !isDark
-                  ? AppColors.white
-                  : AppColors.primaryLightColor,
-              gradient: LinearGradient(
-                colors: !isDark
-                    ? [AppColors.accentGreen, AppColors.primaryLightColor]
-                    : [
-                        AppColors.secondaryDarkColor,
-                        AppColors.primaryLightColor,
-                      ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
+          return ProfileDrawer(
+            child: Scaffold(
+              body: IndexedStack(index: currentIndex, children: screens),
+              bottomNavigationBar: ConvexAppBar(
+                style: TabStyle.reactCircle,
+                backgroundColor: !isDark
+                    ? AppColors.primaryblue
+                    : AppColors.darkBackground,
+                color: AppColors.white,
+                elevation: 12,
+                curveSize: 90,
+                height: 65,
+                initialActiveIndex: currentIndex,
+                onTap: (index) =>
+                    context.read<NavigationCubit>().changeIndex(index),
+                activeColor: !isDark
+                    ? AppColors.white
+                    : AppColors.primaryLightColor,
+                gradient: LinearGradient(
+                  colors: !isDark
+                      ? [AppColors.accentGreen, AppColors.primaryLightColor]
+                      : [
+                          AppColors.secondaryDarkColor,
+                          AppColors.primaryLightColor,
+                        ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                items: const [
+                  TabItem(icon: LineIcons.box, title: 'categories'),
+                  TabItem(icon: LineIcons.building, title: 'companies'),
+                  TabItem(icon: LineIcons.search, title: 'Search'),
+                  TabItem(icon: LineIcons.receipt, title: 'Orders'),
+                ],
               ),
-              items: const [
-                TabItem(icon: LineIcons.box, title: 'categories'),
-                TabItem(icon: LineIcons.building, title: 'companies'),
-                TabItem(icon: LineIcons.search, title: 'Search'),
-                TabItem(icon: LineIcons.receipt, title: 'Orders'),
-              ],
             ),
           );
         },
