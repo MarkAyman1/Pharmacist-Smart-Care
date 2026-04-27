@@ -7,8 +7,7 @@ class ApiInterceptor extends Interceptor {
   ApiInterceptor(this.dio);
 
   @override
-  void onRequest(
-      RequestOptions options, RequestInterceptorHandler handler) {
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     final token = CacheHelper.getAccessToken();
 
     if (token != null && token.isNotEmpty) {
@@ -22,28 +21,27 @@ class ApiInterceptor extends Interceptor {
 
   @override
   Future<void> onError(
-      DioException err, ErrorInterceptorHandler handler) async {
-
+    DioException err,
+    ErrorInterceptorHandler handler,
+  ) async {
     final path = err.requestOptions.path;
 
-    // 🔥 امنع الريفريش على أي auth APIs
-    final isAuthRequest = path.contains('/auth/');
+    final isRefreshRequest = path.contains('/refresh-token');
 
-    if (err.response?.statusCode == 401 && !isAuthRequest) {
+    if (err.response?.statusCode == 401 && !isRefreshRequest) {
       try {
         final refreshToken = CacheHelper.getRefreshToken();
         final accessToken = CacheHelper.getAccessToken();
 
-        if (refreshToken == null) {
+        if (refreshToken == null || refreshToken.isEmpty) {
           return handler.next(err);
         }
 
-        final response = await dio.post(
+        final Dio refreshDio = Dio();
+
+        final response = await refreshDio.post(
           '/api/auth/refresh-token',
-          data: {
-            "accessToken": accessToken,
-            "refreshToken": refreshToken,
-          },
+          data: {"accessToken": accessToken, "refreshToken": refreshToken},
         );
 
         final newAccess = response.data['data']['accessToken'];
@@ -63,8 +61,7 @@ class ApiInterceptor extends Interceptor {
     return handler.next(err);
   }
 
-  Future<Response> _retry(
-      RequestOptions requestOptions, String newToken) {
+  Future<Response> _retry(RequestOptions requestOptions, String newToken) {
     return dio.request(
       requestOptions.path,
       data: requestOptions.data,
