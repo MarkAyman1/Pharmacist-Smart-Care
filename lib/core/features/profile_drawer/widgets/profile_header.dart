@@ -36,11 +36,7 @@ class ProfileHeader extends StatelessWidget {
                 ? NetworkImage(profile!.profileImageUrl)
                 : null,
             child: profile?.profileImageUrl.isEmpty == true
-                ? Icon(
-                    Icons.person,
-                    color: AppColors.primaryblue,
-                    size: 40,
-                  )
+                ? Icon(Icons.person, color: AppColors.primaryblue, size: 40)
                 : null,
           ),
         ),

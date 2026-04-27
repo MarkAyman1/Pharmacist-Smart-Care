@@ -18,7 +18,9 @@ class ProfileRepository {
           response.data['data'] != null) {
         return Right(ProfileModel.fromJson(response.data['data']));
       } else {
-        return Left(ServiceFailure(response.data['message'] ?? "Failed to load profile"));
+        return Left(
+          ServiceFailure(response.data['message'] ?? "Failed to load profile"),
+        );
       }
     } on DioException catch (e) {
       return Left(ServiceFailure.fromDio(e));

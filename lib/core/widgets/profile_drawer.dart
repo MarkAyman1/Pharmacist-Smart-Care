@@ -69,7 +69,9 @@ class _ProfileDrawerState extends State<ProfileDrawer> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Profile Header
-                  ProfileHeader(profile: state is ProfileLoaded ? state.profile : null),
+                  ProfileHeader(
+                    profile: state is ProfileLoaded ? state.profile : null,
+                  ),
                   const SizedBox(height: 30),
 
                   // Profile Information Cards
@@ -82,7 +84,11 @@ class _ProfileDrawerState extends State<ProfileDrawer> {
                               textAlign: TextAlign.center,
                             ),
                           )
-                        : ProfileInfoList(profile: state is ProfileLoaded ? state.profile : null),
+                        : ProfileInfoList(
+                            profile: state is ProfileLoaded
+                                ? state.profile
+                                : null,
+                          ),
                   ),
 
                   // Footer
@@ -103,10 +109,11 @@ class _ProfileDrawerState extends State<ProfileDrawer> {
                         const SizedBox(width: 8),
                         Text(
                           'Licensed Pharmacist',
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w500,
-                          ),
+                          style: Theme.of(context).textTheme.bodyMedium
+                              ?.copyWith(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                              ),
                         ),
                       ],
                     ),
