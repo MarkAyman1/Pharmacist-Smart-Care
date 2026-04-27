@@ -20,12 +20,17 @@ class LoginRepository {
         isFormData: false,
       );
 
-      
-      return Right(LoginResponseModel.fromJson(response.data));
-    }on DioException catch (e) {
+      // 🔥 أهم تعديل هنا
+      if (response.statusCode == 200 &&
+          response.data['succeeded'] == true &&
+          response.data['data'] != null) {
+        return Right(LoginResponseModel.fromJson(response.data));
+      } else {
+        return Left(ServiceFailure(response.data['message'] ?? "Login failed"));
+      }
+    } on DioException catch (e) {
       return Left(ServiceFailure.fromDio(e));
-    }
-    catch (e) {
+    } catch (e) {
       return Left(ServiceFailure(e.toString()));
     }
   }
