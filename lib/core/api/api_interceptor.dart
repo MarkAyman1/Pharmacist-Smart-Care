@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:pharmacist/core/services/cache_helper.dart';
 
-
 class ApiInterceptor extends Interceptor {
   final Dio dio;
 
@@ -24,7 +23,13 @@ class ApiInterceptor extends Interceptor {
   @override
   Future<void> onError(
       DioException err, ErrorInterceptorHandler handler) async {
-    if (err.response?.statusCode == 401) {
+
+    final path = err.requestOptions.path;
+
+    // 🔥 امنع الريفريش على أي auth APIs
+    final isAuthRequest = path.contains('/auth/');
+
+    if (err.response?.statusCode == 401 && !isAuthRequest) {
       try {
         final refreshToken = CacheHelper.getRefreshToken();
         final accessToken = CacheHelper.getAccessToken();
