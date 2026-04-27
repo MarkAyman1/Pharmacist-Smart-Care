@@ -176,6 +176,7 @@ class _RegisterFormState extends State<RegisterForm> {
                       const SizedBox(height: 15),
                       CustomTextFormField(
                         label: "Licence Number",
+                        hint: "PH-00-ZZJ-2830",
                         icon: Icons.badge_outlined,
                         controller: licenceController,
                         validator: (v) => v!.isEmpty ? "Required" : null,

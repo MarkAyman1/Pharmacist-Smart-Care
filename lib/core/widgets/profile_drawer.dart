@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pharmacist/core/app_color.dart';
+import 'package:pharmacist/core/features/profile_drawer/blocs/profile_bloc.dart';
+import 'package:pharmacist/core/features/profile_drawer/blocs/profile_event.dart';
+import 'package:pharmacist/core/features/profile_drawer/blocs/profile_state.dart';
+import 'package:pharmacist/core/features/profile_drawer/widgets/profile_header.dart';
+import 'package:pharmacist/core/features/profile_drawer/widgets/profile_info_list.dart';
 
 class ProfileDrawer extends StatefulWidget {
   const ProfileDrawer({super.key, required this.child});
@@ -20,6 +26,8 @@ class _ProfileDrawerState extends State<ProfileDrawer> {
   void initState() {
     super.initState();
     ProfileDrawer.controller = _advancedDrawerController;
+    // Load profile when drawer is initialized
+    context.read<ProfileBloc>().add(LoadProfile());
   }
 
   void showDrawer() {
@@ -28,223 +36,88 @@ class _ProfileDrawerState extends State<ProfileDrawer> {
 
   @override
   Widget build(BuildContext context) {
-    return AdvancedDrawer(
-      backdrop: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              AppColors.primaryblue.withValues(alpha: 0.8),
-              AppColors.accentGreen.withValues(alpha: 0.6),
-            ],
+    return BlocBuilder<ProfileBloc, ProfileState>(
+      builder: (context, state) {
+        return AdvancedDrawer(
+          backdrop: Container(
+            width: double.infinity,
+            height: double.infinity,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  AppColors.primaryblue.withValues(alpha: 0.8),
+                  AppColors.accentGreen.withValues(alpha: 0.6),
+                ],
+              ),
+            ),
           ),
-        ),
-      ),
-      controller: _advancedDrawerController,
-      animationCurve: Curves.easeInOut,
-      animationDuration: const Duration(milliseconds: 300),
-      animateChildDecoration: true,
-      rtlOpening: false,
-      disabledGestures: false,
-      childDecoration: const BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(16)),
-      ),
-      drawer: SafeArea(
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Profile Header
-              Row(
+          controller: _advancedDrawerController,
+          animationCurve: Curves.easeInOut,
+          animationDuration: const Duration(milliseconds: 300),
+          animateChildDecoration: true,
+          rtlOpening: false,
+          disabledGestures: false,
+          childDecoration: const BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(16)),
+          ),
+          drawer: SafeArea(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    width: 80,
-                    height: 80,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      gradient: LinearGradient(
-                        colors: [AppColors.primaryblue, AppColors.accentGreen],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppColors.primaryblue.withValues(alpha: 0.3),
-                          blurRadius: 10,
-                          offset: const Offset(0, 5),
-                        ),
-                      ],
-                    ),
-                    child: const CircleAvatar(
-                      radius: 38,
-                      backgroundColor: Colors.white,
-                      child: Icon(
-                        Icons.person,
-                        color: AppColors.primaryblue,
-                        size: 40,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 16),
+                  // Profile Header
+                  ProfileHeader(profile: state is ProfileLoaded ? state.profile : null),
+                  const SizedBox(height: 30),
+
+                  // Profile Information Cards
                   Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    child: state is ProfileError
+                        ? Center(
+                            child: Text(
+                              state.message,
+                              style: const TextStyle(color: Colors.white),
+                              textAlign: TextAlign.center,
+                            ),
+                          )
+                        : ProfileInfoList(profile: state is ProfileLoaded ? state.profile : null),
+                  ),
+
+                  // Footer
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          'John Doe', // FirstName + LastName
-                          style: Theme.of(context).textTheme.titleLarge
-                              ?.copyWith(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
+                        Icon(
+                          Icons.verified,
+                          color: AppColors.accentGreen,
+                          size: 20,
                         ),
-                        const SizedBox(height: 4),
+                        const SizedBox(width: 8),
                         Text(
-                          '@johndoe_pharm', // userName
-                          style: Theme.of(context).textTheme.bodyMedium
-                              ?.copyWith(
-                                color: Colors.white.withValues(alpha: 0.8),
-                              ),
+                          'Licensed Pharmacist',
+                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ],
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 30),
-
-              // Profile Information Cards
-              Expanded(
-                child: ListView(
-                  padding: EdgeInsets.zero,
-                  children: [
-                    _buildInfoCard(
-                      context,
-                      icon: Icons.email,
-                      title: 'Email',
-                      value: 'john.doe@example.com',
-                    ),
-                    const SizedBox(height: 16),
-                    _buildInfoCard(
-                      context,
-                      icon: Icons.phone,
-                      title: 'Phone Number',
-                      value: '+1 (555) 123-4567',
-                    ),
-                    const SizedBox(height: 16),
-                    _buildInfoCard(
-                      context,
-                      icon: Icons.person,
-                      title: 'Gender',
-                      value: 'Male',
-                    ),
-                    const SizedBox(height: 16),
-                    _buildInfoCard(
-                      context,
-                      icon: Icons.badge,
-                      title: 'License Number',
-                      value: 'PH-123456789',
-                    ),
-                    const SizedBox(height: 16),
-                    _buildInfoCard(
-                      context,
-                      icon: Icons.store,
-                      title: 'Store Name',
-                      value: 'MediCare Pharmacy',
-                    ),
-                  ],
-                ),
-              ),
-
-              // Footer
-              Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.verified,
-                      color: AppColors.accentGreen,
-                      size: 20,
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      'Licensed Pharmacist',
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-      child: widget.child,
-    );
-  }
-
-  Widget _buildInfoCard(
-    BuildContext context, {
-    required IconData icon,
-    required String title,
-    required String value,
-  }) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: Colors.white.withValues(alpha: 0.2),
-          width: 1,
-        ),
-      ),
-      child: Row(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: AppColors.accentGreen.withValues(alpha: 0.2),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Icon(icon, color: AppColors.accentGreen, size: 20),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Colors.white.withValues(alpha: 0.7),
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  value,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
             ),
           ),
-        ],
-      ),
+          child: widget.child,
+        );
+      },
     );
   }
 }

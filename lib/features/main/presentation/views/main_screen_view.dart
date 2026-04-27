@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
+import 'package:dio/dio.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:pharmacist/core/api/dio_consumer.dart';
 import 'package:pharmacist/core/app_color.dart';
+import 'package:pharmacist/core/features/profile_drawer/blocs/profile_bloc.dart';
+import 'package:pharmacist/core/features/profile_drawer/repositories/profile_repository.dart';
 import 'package:pharmacist/core/widgets/profile_drawer.dart';
 import 'package:pharmacist/features/Search/presentation/screen/search_screen.dart';
 import 'package:pharmacist/features/categories/presentation/screens/categories_screen.dart';
@@ -23,8 +27,13 @@ class MainScreenView extends StatelessWidget {
       OrdersScreen(),
     ];
 
-    return BlocProvider(
-      create: (_) => NavigationCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => NavigationCubit()),
+        BlocProvider(
+          create: (_) => ProfileBloc(ProfileRepository(DioConsumer(Dio()))),
+        ),
+      ],
       child: BlocBuilder<NavigationCubit, int>(
         builder: (context, currentIndex) {
           return ProfileDrawer(
