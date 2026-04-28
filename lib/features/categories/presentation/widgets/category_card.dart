@@ -38,23 +38,16 @@ class CategoryCard extends StatelessWidget {
                       child: imageUrl.isNotEmpty
                           ? CachedNetworkImage(
                               imageUrl: imageUrl,
-                              httpHeaders: {
-                                "User-Agent": "Mozilla/5.0",
-                                "Referer": "https://yourwebsite.com",
-                              },
-                              fit: BoxFit
-                                  .cover, // makes the image cover its container
+                              fit: BoxFit.cover,
                               placeholder: (context, url) => const Center(
                                 child: CircularProgressIndicator(),
                               ),
                               errorWidget: (context, url, error) => Container(
-                                color: Colors
-                                    .grey
-                                    .shade300, 
+                                color: Colors.grey.shade300,
                                 child: const Center(
                                   child: Icon(
                                     Icons.broken_image,
-                                    size: 40, 
+                                    size: 40,
                                     color: Colors.grey,
                                   ),
                                 ),

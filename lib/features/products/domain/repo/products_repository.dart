@@ -78,7 +78,7 @@ class ProductsRepository {
     try {
       final response = await apiConsumer.patch(
         '/api/Pharmacist/Inventories/DecreaseStockInStore',
-        queryParameters: {"productId": productId, "quantityToRemove": quantity},
+        queryParameters: {"productId": productId, "quantityToSubtract": quantity},
       );
       return response.data['data'];
     } on DioException catch (e) {
