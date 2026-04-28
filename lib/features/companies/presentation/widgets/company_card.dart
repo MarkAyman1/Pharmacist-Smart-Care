@@ -1,9 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:pharmacist/core/app_color.dart';
 import 'package:pharmacist/features/companies/domain/models/company_model.dart';
 
 class CompanyCard extends StatelessWidget {
-  final CompanyModel company; // بدل ما ناخد كل حاجة separately
+  final CompanyModel company;
   final VoidCallback onTap;
 
   const CompanyCard({super.key, required this.company, required this.onTap});
@@ -45,10 +46,21 @@ class CompanyCard extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(16),
                   child: company.logoUrl.isNotEmpty
-                      ? Image.network(
-                          company.logoUrl,
+                      ? CachedNetworkImage(
+                          imageUrl: company.logoUrl,
                           fit: BoxFit.cover,
-                          width: double.infinity,
+                          placeholder: (context, url) =>
+                              const Center(child: CircularProgressIndicator()),
+                          errorWidget: (context, url, error) => Container(
+                            color: Colors.grey.shade300,
+                            child: const Center(
+                              child: Icon(
+                                Icons.local_pharmacy_rounded,
+                                size: 40,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ),
                         )
                       : Container(
                           decoration: BoxDecoration(
@@ -87,7 +99,7 @@ class CompanyCard extends StatelessWidget {
               Text(
                 '${company.productsCount} products',
                 style: theme.textTheme.bodyMedium?.copyWith(
-                  color: theme.colorScheme.onSurface.withValues(alpha: (0.7)),
+                  color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
                 ),
               ),
             ],

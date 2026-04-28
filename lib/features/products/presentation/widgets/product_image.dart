@@ -16,10 +16,6 @@ class ProductImage extends StatelessWidget {
         child: imageUrl.isNotEmpty
             ? CachedNetworkImage(
                 imageUrl: imageUrl,
-                httpHeaders: {
-                  "User-Agent": "Mozilla/5.0",
-                  "Referer": "https://yourwebsite.com",
-                },
                 fit: BoxFit.cover,
                 placeholder: (context, url) =>
                     const Center(child: CircularProgressIndicator()),
