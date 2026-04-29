@@ -30,7 +30,7 @@ class PickupOrderDetailsContent extends StatelessWidget {
           orderId: order.orderId,
           orderDateLabel: dateFmt.format(order.orderDate.toLocal()),
         ),
-        OrderStatusStepper(currentStatus: order.status),
+        OrderStatusStepper(currentStatus: order.status, isOnlineOrder: false),
         PaymentStatusWidget(isPaid: order.isPaid, status: order.status),
         OrderItemsSection(items: order.items),
         OrderDetailsActionSection(

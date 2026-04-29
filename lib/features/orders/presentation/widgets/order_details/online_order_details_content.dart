@@ -31,7 +31,7 @@ class OnlineOrderDetailsContent extends StatelessWidget {
           orderId: order.orderId,
           orderDateLabel: dateFmt.format(order.orderDate.toLocal()),
         ),
-        OrderStatusStepper(currentStatus: order.status),
+        OrderStatusStepper(currentStatus: order.status, isOnlineOrder: true),
         PaymentStatusWidget(isPaid: order.isPaid, status: order.status),
         OrderOnlineInfoSection(order: order),
         OrderItemsSection(items: order.items),
