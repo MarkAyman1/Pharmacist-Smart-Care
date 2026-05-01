@@ -3,27 +3,45 @@ import 'package:pharmacist/core/app_color.dart';
 import 'package:pharmacist/features/orders/presentation/utils/order_status_mapper.dart';
 
 class OrderStatusStepper extends StatelessWidget {
-  const OrderStatusStepper({super.key, required this.currentStatus});
+  const OrderStatusStepper({
+    super.key,
+    required this.currentStatus,
+    required this.isOnlineOrder,
+  });
 
   final String currentStatus;
+  final bool isOnlineOrder;
 
   /// Matches logical flow (not raw enum index order).
-  static const List<String> _fulfillmentSteps = [
+  static const List<String> _onlineFulfillmentSteps = [
     'Pending',
     'Confirmed',
     'Processing',
+    'Ready to ship',
+    'Delivery accepted',
     'Shipped',
+    'Completed',
+  ];
+
+  static const List<String> _pickupFulfillmentSteps = [
+    'Pending',
+    'Confirmed',
+    'Processing',
+    'Waiting for pickup',
     'Completed',
   ];
 
   @override
   Widget build(BuildContext context) {
     final idx = OrderStatusMapper.stepperIndexFromApiStatus(currentStatus);
+    final steps = isOnlineOrder
+        ? _onlineFulfillmentSteps
+        : _pickupFulfillmentSteps;
 
     if (idx < 0) {
       final message =
           OrderStatusMapper.terminalBannerForStepperCode(idx) ??
-              'Order status update';
+          'Order status update';
       final isPayment = idx == -3;
       final isRefund = idx == -5;
       final isExpired = idx == -4;
@@ -78,11 +96,11 @@ class OrderStatusStepper extends StatelessWidget {
                 child: Text(
                   message,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Theme.of(context).brightness == Brightness.dark
-                            ? Colors.white70
-                            : Colors.black87,
-                        fontWeight: FontWeight.w600,
-                      ),
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? Colors.white70
+                        : Colors.black87,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
             ],
@@ -94,7 +112,7 @@ class OrderStatusStepper extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 20),
       child: Row(
-        children: List.generate(_fulfillmentSteps.length, (index) {
+        children: List.generate(steps.length, (index) {
           final active = index <= idx;
 
           return Expanded(
@@ -112,8 +130,9 @@ class OrderStatusStepper extends StatelessWidget {
                     boxShadow: active
                         ? [
                             BoxShadow(
-                              color: AppColors.primaryblue
-                                  .withValues(alpha: 0.35),
+                              color: AppColors.primaryblue.withValues(
+                                alpha: 0.35,
+                              ),
                               blurRadius: 8,
                               offset: const Offset(0, 3),
                             ),
@@ -128,7 +147,7 @@ class OrderStatusStepper extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  _fulfillmentSteps[index],
+                  steps[index],
                   textAlign: TextAlign.center,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
@@ -136,8 +155,9 @@ class OrderStatusStepper extends StatelessWidget {
                     fontSize: 10,
                     fontWeight: FontWeight.w600,
                     height: 1.15,
-                    color:
-                        active ? AppColors.primaryblue : Colors.grey.shade500,
+                    color: active
+                        ? AppColors.primaryblue
+                        : Colors.grey.shade500,
                   ),
                 ),
               ],

@@ -49,6 +49,40 @@ class _OrderStatusSelectorState extends State<OrderStatusSelector> {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
+    final selectablePairs = OrderStatusMapper.selectablePairs.where((pair) {
+      if (widget.isOnlineOrder && pair.$1 == OrderStatusMapper.completed) {
+        return false;
+      }
+      if (widget.isOnlineOrder &&
+          pair.$1 == OrderStatusMapper.deliveryAccepted) {
+        return false;
+      }
+      if (widget.isOnlineOrder &&
+          pair.$1 == OrderStatusMapper.waitingForPickup) {
+        return false;
+      }
+      if (!widget.isOnlineOrder && pair.$1 == OrderStatusMapper.shipped) {
+        return false;
+      }
+      if (!widget.isOnlineOrder && pair.$1 == OrderStatusMapper.readyToShip) {
+        return false;
+      }
+      if (!widget.isOnlineOrder &&
+          pair.$1 == OrderStatusMapper.deliveryAccepted) {
+        return false;
+      }
+      return true;
+    }).toList();
+
+    if (!selectablePairs.any((pair) => pair.$1 == _currentValue)) {
+      selectablePairs.insert(0, (
+        _currentValue,
+        OrderStatusMapper.labelForCode(_currentValue),
+      ));
+    }
+
+    final ordersBloc = context.read<OrdersBloc>();
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -61,7 +95,7 @@ class _OrderStatusSelectorState extends State<OrderStatusSelector> {
         const SizedBox(height: 10),
         DropdownButtonFormField<int>(
           key: _dropdownKey,
-          value: _currentValue,
+          initialValue: _currentValue,
           decoration: InputDecoration(
             filled: true,
             fillColor: isDark ? AppColors.darkSurface : AppColors.white,
@@ -90,8 +124,18 @@ class _OrderStatusSelectorState extends State<OrderStatusSelector> {
             ),
           ),
           borderRadius: BorderRadius.circular(16),
-          items: OrderStatusMapper.selectablePairs
-              .map((e) => DropdownMenuItem<int>(value: e.$1, child: Text(e.$2)))
+          items: selectablePairs
+              .map(
+                (e) => DropdownMenuItem<int>(
+                  value: e.$1,
+                  enabled:
+                      !(widget.isOnlineOrder &&
+                          e.$1 == OrderStatusMapper.completed) &&
+                      !(!widget.isOnlineOrder &&
+                          e.$1 == OrderStatusMapper.shipped),
+                  child: Text(e.$2),
+                ),
+              )
               .toList(),
           onChanged: (value) async {
             if (value == null) return;
@@ -101,7 +145,7 @@ class _OrderStatusSelectorState extends State<OrderStatusSelector> {
                 _currentValue = value;
                 _selectedCode = value;
               });
-              context.read<OrdersBloc>().add(
+              ordersBloc.add(
                 UpdateOrderStatus(
                   orderId: widget.orderId,
                   status: value,
@@ -113,20 +157,21 @@ class _OrderStatusSelectorState extends State<OrderStatusSelector> {
                 context: context,
                 barrierDismissible: false,
                 builder: (dialogContext) => BlocProvider.value(
-                  value: context.read<OrdersBloc>(),
+                  value: ordersBloc,
                   child: PickupCodeVerificationDialog(
                     orderId: widget.orderId,
                     isOnlineOrder: widget.isOnlineOrder,
-                    bloc: context.read<OrdersBloc>(),
+                    bloc: ordersBloc,
                   ),
                 ),
               );
+              if (!mounted) return;
               if (confirmed == true) {
                 setState(() {
                   _currentValue = value;
                   _selectedCode = value;
                 });
-                context.read<OrdersBloc>().add(
+                ordersBloc.add(
                   UpdateOrderStatus(
                     orderId: widget.orderId,
                     status: value,

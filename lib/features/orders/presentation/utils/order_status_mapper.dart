@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:pharmacist/core/app_color.dart';
 
-/// Mirrors backend `OrderStatus` enum order (values 0–9).
+/// Mirrors backend `OrderStatus` enum order (values 0–10).
 abstract final class OrderStatusMapper {
   static const int pending = 0;
   static const int processing = 1;
   static const int shipped = 2;
+  static const int waitingForPickup = 10;
   static const int completed = 3;
   static const int cancelled = 4;
   static const int confirmed = 5;
@@ -13,15 +14,20 @@ abstract final class OrderStatusMapper {
   static const int paymentFailed = 7;
   static const int expired = 8;
   static const int refunded = 9;
+  static const int readyToShip = 11;
+  static const int deliveryAccepted = 12;
 
-  /// Dropdown / PATCH: same order as backend enum (0 → 9).
+  /// Dropdown / PATCH: same order as backend enum (0 → 12).
   static const List<(int code, String label)> selectablePairs = [
     (pending, 'Pending'),
     (processing, 'Processing'),
+    (confirmed, 'Confirmed'),
+    (readyToShip, 'Ready to ship'),
+    (deliveryAccepted, 'Delivery accepted'),
     (shipped, 'Shipped'),
+    (waitingForPickup, 'Waiting for pickup'),
     (completed, 'Completed'),
     (cancelled, 'Cancelled'),
-    (confirmed, 'Confirmed'),
     (returned, 'Returned'),
     (paymentFailed, 'Payment failed'),
     (expired, 'Expired'),
@@ -32,11 +38,11 @@ abstract final class OrderStatusMapper {
     return raw.toLowerCase().trim().replaceAll(RegExp(r'\s+'), ' ');
   }
 
-  /// Parses API value: integer string `0`–`9` or enum name / common labels.
+  /// Parses API value: integer string `0`–`12` or enum name / common labels.
   static int codeFromApiStatus(String raw) {
     final trimmed = raw.trim();
     final asInt = int.tryParse(trimmed);
-    if (asInt != null && asInt >= pending && asInt <= refunded) {
+    if (asInt != null && asInt >= pending && asInt <= deliveryAccepted) {
       return asInt;
     }
 
@@ -45,7 +51,22 @@ abstract final class OrderStatusMapper {
 
     if (n == 'pending' || n == 'new') return pending;
     if (n == 'processing' || n.contains('process')) return processing;
+    if (n == 'ready_to_ship' ||
+        n == 'ready to ship' ||
+        (n.contains('ready') && n.contains('ship'))) {
+      return readyToShip;
+    }
+    if (n == 'delivery_accepted' ||
+        n == 'delivery accepted' ||
+        (n.contains('delivery') && n.contains('accepted'))) {
+      return deliveryAccepted;
+    }
     if (n == 'shipped' || n.contains('ship')) return shipped;
+    if (n == 'waitingforpickup' ||
+        n.contains('waiting for pickup') ||
+        (n.contains('waiting') && n.contains('pickup'))) {
+      return waitingForPickup;
+    }
     if (n == 'completed' || n.contains('complete')) return completed;
     if (n == 'cancelled' || n == 'canceled' || n.contains('cancel')) {
       return cancelled;
@@ -63,8 +84,8 @@ abstract final class OrderStatusMapper {
     return pending;
   }
 
-  /// Fulfillment stepper: Pending → Confirmed → Processing → Shipped → Completed.
-  /// Returns `0`–`4` for those steps, or negative codes for terminal/problem states
+  /// Fulfillment stepper: Pending → Confirmed → Processing → Ready to ship → Delivery accepted → Shipped → Completed.
+  /// Returns `0`–`6` for those steps, or negative codes for terminal/problem states
   /// (see [terminalBannerForStepperCode]).
   static int stepperVisualIndexFromStatusCode(int code) {
     switch (code) {
@@ -74,10 +95,16 @@ abstract final class OrderStatusMapper {
         return 1;
       case processing:
         return 2;
+      case readyToShip:
+        return 3;
+      case deliveryAccepted:
+        return 4;
       case shipped:
+        return 5;
+      case waitingForPickup:
         return 3;
       case completed:
-        return 4;
+        return 6;
       case cancelled:
         return -1;
       case returned:
@@ -118,6 +145,15 @@ abstract final class OrderStatusMapper {
     for (final pair in selectablePairs) {
       if (pair.$1 == code) return pair.$2;
     }
+    if (code == waitingForPickup) {
+      return 'Waiting for pickup';
+    }
+    if (code == readyToShip) {
+      return 'Ready to ship';
+    }
+    if (code == deliveryAccepted) {
+      return 'Delivery accepted';
+    }
     return 'Pending';
   }
 
@@ -145,6 +181,8 @@ abstract final class OrderStatusMapper {
         return Colors.blueGrey;
       case refunded:
         return Colors.deepPurple;
+      case waitingForPickup:
+        return AppColors.primaryblue;
       default:
         return AppColors.primaryblue;
     }
