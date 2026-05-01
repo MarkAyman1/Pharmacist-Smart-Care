@@ -135,7 +135,8 @@ class _OnlineOrdersBody extends StatelessWidget {
             orderDateLabel: dateFmt.format(order.orderDate.toLocal()),
             onTap: () {
               final bloc = context.read<OrdersBloc>();
-              Navigator.of(context).push(
+              Navigator.of(context)
+                  .push(
                 MaterialPageRoute<void>(
                   builder: (_) => BlocProvider.value(
                     value: bloc,
@@ -144,7 +145,10 @@ class _OnlineOrdersBody extends StatelessWidget {
                     ),
                   ),
                 ),
-              );
+              )
+                  .then((_) {
+                bloc.add(GetOnlineOrders(1));
+              });
             },
           ),
         );
@@ -199,7 +203,8 @@ class _PickupOrdersBody extends StatelessWidget {
             orderDateLabel: dateFmt.format(order.orderDate.toLocal()),
             onTap: () {
               final bloc = context.read<OrdersBloc>();
-              Navigator.of(context).push(
+              Navigator.of(context)
+                  .push(
                 MaterialPageRoute<void>(
                   builder: (_) => BlocProvider.value(
                     value: bloc,
@@ -208,7 +213,10 @@ class _PickupOrdersBody extends StatelessWidget {
                     ),
                   ),
                 ),
-              );
+              )
+                  .then((_) {
+                bloc.add(GetPickupOrders(1));
+              });
             },
           ),
         );
