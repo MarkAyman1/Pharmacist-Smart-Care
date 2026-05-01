@@ -120,84 +120,61 @@ class _OrderStatusSelectorState extends State<OrderStatusSelector> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-        Text(
-          'Update status',
-          style: Theme.of(
-            context,
-          ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        DropdownButtonFormField<int>(
-          key: _dropdownKey,
-          value: _currentValue,
-          decoration: InputDecoration(
-            filled: true,
-            fillColor: isDark ? AppColors.darkSurface : AppColors.white,
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 14,
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(16),
-              borderSide: BorderSide(
-                color: AppColors.primaryblue.withAlpha(64),
-              ),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(16),
-              borderSide: BorderSide(
-                color: AppColors.primaryblue.withAlpha(51),
-              ),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(16),
-              borderSide: const BorderSide(
-                color: AppColors.primaryblue,
-                width: 2,
-              ),
-            ),
+          Text(
+            'Update status',
+            style: Theme.of(
+              context,
+            ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
           ),
-          borderRadius: BorderRadius.circular(16),
-          items: selectablePairs
-              .map(
-                (e) => DropdownMenuItem<int>(
-                  value: e.$1,
-                  enabled:
-                      !(widget.isOnlineOrder &&
-                          e.$1 == OrderStatusMapper.completed) &&
-                      !(!widget.isOnlineOrder &&
-                          e.$1 == OrderStatusMapper.shipped),
-                  child: Text(e.$2),
+          const SizedBox(height: 10),
+          DropdownButtonFormField<int>(
+            key: _dropdownKey,
+            value: _currentValue,
+            decoration: InputDecoration(
+              filled: true,
+              fillColor: isDark ? AppColors.darkSurface : AppColors.white,
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 14,
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(16),
+                borderSide: BorderSide(
+                  color: AppColors.primaryblue.withAlpha(64),
                 ),
-              )
-              .toList(),
-          onChanged: (value) async {
-            if (value == null) return;
-
-            if (value != OrderStatusMapper.completed) {
-              _pendingStatus = value;
-              ordersBloc.add(
-                UpdateOrderStatus(
-                  orderId: widget.orderId,
-                  status: value,
-                  isOnlineOrder: widget.isOnlineOrder,
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(16),
+                borderSide: BorderSide(
+                  color: AppColors.primaryblue.withAlpha(51),
                 ),
-              );
-            } else {
-              final confirmed = await showDialog<bool>(
-                context: context,
-                barrierDismissible: false,
-                builder: (dialogContext) => BlocProvider.value(
-                  value: ordersBloc,
-                  child: PickupCodeVerificationDialog(
-                    orderId: widget.orderId,
-                    isOnlineOrder: widget.isOnlineOrder,
-                    bloc: ordersBloc,
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(16),
+                borderSide: const BorderSide(
+                  color: AppColors.primaryblue,
+                  width: 2,
+                ),
+              ),
+            ),
+            borderRadius: BorderRadius.circular(16),
+            items: selectablePairs
+                .map(
+                  (e) => DropdownMenuItem<int>(
+                    value: e.$1,
+                    enabled:
+                        !(widget.isOnlineOrder &&
+                            e.$1 == OrderStatusMapper.completed) &&
+                        !(!widget.isOnlineOrder &&
+                            e.$1 == OrderStatusMapper.shipped),
+                    child: Text(e.$2),
                   ),
-                ),
-              );
-              if (!mounted) return;
-              if (confirmed == true) {
+                )
+                .toList(),
+            onChanged: (value) async {
+              if (value == null) return;
+
+              if (value != OrderStatusMapper.completed) {
                 _pendingStatus = value;
                 ordersBloc.add(
                   UpdateOrderStatus(
@@ -207,15 +184,39 @@ class _OrderStatusSelectorState extends State<OrderStatusSelector> {
                   ),
                 );
               } else {
-                setState(() {
-                  _dropdownKey = UniqueKey();
-                  _currentValue = _selectedCode;
-                });
+                final confirmed = await showDialog<bool>(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (dialogContext) => BlocProvider.value(
+                    value: ordersBloc,
+                    child: PickupCodeVerificationDialog(
+                      orderId: widget.orderId,
+                      isOnlineOrder: widget.isOnlineOrder,
+                      bloc: ordersBloc,
+                    ),
+                  ),
+                );
+                if (!mounted) return;
+                if (confirmed == true) {
+                  _pendingStatus = value;
+                  ordersBloc.add(
+                    UpdateOrderStatus(
+                      orderId: widget.orderId,
+                      status: value,
+                      isOnlineOrder: widget.isOnlineOrder,
+                    ),
+                  );
+                } else {
+                  setState(() {
+                    _dropdownKey = UniqueKey();
+                    _currentValue = _selectedCode;
+                  });
+                }
               }
-            }
-          },
-        ),
-      ],
-    ));
+            },
+          ),
+        ],
+      ),
+    );
   }
 }
