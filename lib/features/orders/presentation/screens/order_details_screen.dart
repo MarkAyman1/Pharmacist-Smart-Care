@@ -22,17 +22,16 @@ class OrderDetailsScreen extends StatelessWidget {
       listenWhen: (previous, current) => current is OrderStatusUpdated,
       listener: (context, state) {
         if (!context.mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Order status updated'),
-            behavior: SnackBarBehavior.floating,
-          ),
-        );
-        Future<void>.delayed(const Duration(milliseconds: 400), () {
-          if (context.mounted) {
-            Navigator.of(context).pop();
-          }
-        });
+
+        if (state is OrderStatusUpdated) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Order status updated'),
+              behavior: SnackBarBehavior.floating,
+              backgroundColor: Colors.green,
+            ),
+          );
+        }
       },
       child: Scaffold(
         appBar: AppThemes.customAppBar(

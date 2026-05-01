@@ -4,7 +4,7 @@ import 'package:pharmacist/core/app_color.dart';
 /// Mirrors backend `OrderStatus` enum order (values 0–10).
 abstract final class OrderStatusMapper {
   static const int pending = 0;
-  static const int processing = 1;
+  // static const int processing = 1;
   static const int shipped = 2;
   static const int waitingForPickup = 10;
   static const int completed = 3;
@@ -20,7 +20,7 @@ abstract final class OrderStatusMapper {
   /// Dropdown / PATCH: same order as backend enum (0 → 12).
   static const List<(int code, String label)> selectablePairs = [
     (pending, 'Pending'),
-    (processing, 'Processing'),
+    // (processing, 'Processing'),
     (confirmed, 'Confirmed'),
     (readyToShip, 'Ready to ship'),
     (deliveryAccepted, 'Delivery accepted'),
@@ -50,7 +50,7 @@ abstract final class OrderStatusMapper {
     final compact = n.replaceAll(' ', '');
 
     if (n == 'pending' || n == 'new') return pending;
-    if (n == 'processing' || n.contains('process')) return processing;
+    // if (n == 'processing' || n.contains('process')) return processing;
     if (n == 'ready_to_ship' ||
         n == 'ready to ship' ||
         (n.contains('ready') && n.contains('ship'))) {
@@ -84,8 +84,8 @@ abstract final class OrderStatusMapper {
     return pending;
   }
 
-  /// Fulfillment stepper: Pending → Confirmed → Processing → Ready to ship → Delivery accepted → Shipped → Completed.
-  /// Returns `0`–`6` for those steps, or negative codes for terminal/problem states
+  /// Fulfillment stepper: Pending → Confirmed → Ready to ship → Delivery accepted → Shipped → Completed.
+  /// Returns `0`–`5` for online steps, `0`–`3` for pickup steps, or negative codes for terminal/problem states
   /// (see [terminalBannerForStepperCode]).
   static int stepperVisualIndexFromStatusCode(int code) {
     switch (code) {
@@ -93,18 +93,16 @@ abstract final class OrderStatusMapper {
         return 0;
       case confirmed:
         return 1;
-      case processing:
-        return 2;
       case readyToShip:
-        return 3;
+        return 2;
       case deliveryAccepted:
-        return 4;
-      case shipped:
-        return 5;
-      case waitingForPickup:
         return 3;
+      case shipped:
+        return 4;
+      case waitingForPickup:
+        return 2;
       case completed:
-        return 6;
+        return 5;
       case cancelled:
         return -1;
       case returned:
@@ -172,7 +170,7 @@ abstract final class OrderStatusMapper {
         return Colors.orange;
       case confirmed:
         return AppColors.primaryLightColor;
-      case processing:
+      // case processing:
       case shipped:
         return AppColors.primaryblue;
       case returned:

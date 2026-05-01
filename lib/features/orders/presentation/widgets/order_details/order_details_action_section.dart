@@ -9,12 +9,14 @@ class OrderDetailsActionSection extends StatelessWidget {
     required this.orderId,
     required this.isOnlineOrder,
     required this.apiStatus,
+    required this.onStatusUpdated,
   });
 
   final double total;
   final String orderId;
   final bool isOnlineOrder;
   final String apiStatus;
+  final ValueChanged<String> onStatusUpdated;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +31,7 @@ class OrderDetailsActionSection extends StatelessWidget {
             orderId: orderId,
             isOnlineOrder: isOnlineOrder,
             apiStatus: apiStatus,
+            onStatusUpdated: onStatusUpdated,
           ),
         ],
       ),

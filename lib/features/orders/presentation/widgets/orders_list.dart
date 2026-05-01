@@ -58,10 +58,7 @@ class OrdersList extends StatelessWidget {
 }
 
 class _OrdersRefreshWrapper extends StatelessWidget {
-  const _OrdersRefreshWrapper({
-    required this.filterType,
-    required this.child,
-  });
+  const _OrdersRefreshWrapper({required this.filterType, required this.child});
 
   final String filterType;
   final Widget child;
@@ -117,8 +114,8 @@ class _OnlineOrdersBody extends StatelessWidget {
             label: 'Load more delivery orders',
             onPressed: () {
               context.read<OrdersBloc>().add(
-                    GetOnlineOrders(data.pageNumber + 1, append: true),
-                  );
+                GetOnlineOrders(data.pageNumber + 1, append: true),
+              );
             },
           );
         }
@@ -135,16 +132,20 @@ class _OnlineOrdersBody extends StatelessWidget {
             orderDateLabel: dateFmt.format(order.orderDate.toLocal()),
             onTap: () {
               final bloc = context.read<OrdersBloc>();
-              Navigator.of(context).push(
-                MaterialPageRoute<void>(
-                  builder: (_) => BlocProvider.value(
-                    value: bloc,
-                    child: OrderDetailsScreen(
-                      args: OnlineOrderRouteArgs(order),
+              Navigator.of(context)
+                  .push(
+                    MaterialPageRoute<void>(
+                      builder: (_) => BlocProvider.value(
+                        value: bloc,
+                        child: OrderDetailsScreen(
+                          args: OnlineOrderRouteArgs(order),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              );
+                  )
+                  .then((_) {
+                    bloc.add(GetOnlineOrders(1));
+                  });
             },
           ),
         );
@@ -181,8 +182,8 @@ class _PickupOrdersBody extends StatelessWidget {
             label: 'Load more pickup orders',
             onPressed: () {
               context.read<OrdersBloc>().add(
-                    GetPickupOrders(data.pageNumber + 1, append: true),
-                  );
+                GetPickupOrders(data.pageNumber + 1, append: true),
+              );
             },
           );
         }
@@ -199,16 +200,20 @@ class _PickupOrdersBody extends StatelessWidget {
             orderDateLabel: dateFmt.format(order.orderDate.toLocal()),
             onTap: () {
               final bloc = context.read<OrdersBloc>();
-              Navigator.of(context).push(
-                MaterialPageRoute<void>(
-                  builder: (_) => BlocProvider.value(
-                    value: bloc,
-                    child: OrderDetailsScreen(
-                      args: PickupOrderRouteArgs(order),
+              Navigator.of(context)
+                  .push(
+                    MaterialPageRoute<void>(
+                      builder: (_) => BlocProvider.value(
+                        value: bloc,
+                        child: OrderDetailsScreen(
+                          args: PickupOrderRouteArgs(order),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              );
+                  )
+                  .then((_) {
+                    bloc.add(GetPickupOrders(1));
+                  });
             },
           ),
         );
@@ -244,10 +249,7 @@ class _LoadMoreTile extends StatelessWidget {
 }
 
 class _OrdersErrorView extends StatelessWidget {
-  const _OrdersErrorView({
-    required this.message,
-    required this.filterType,
-  });
+  const _OrdersErrorView({required this.message, required this.filterType});
 
   final String message;
   final String filterType;
@@ -259,11 +261,7 @@ class _OrdersErrorView extends StatelessWidget {
       padding: const EdgeInsets.all(32),
       children: [
         const SizedBox(height: 48),
-        Icon(
-          Icons.cloud_off_rounded,
-          size: 56,
-          color: AppColors.mediumGrey,
-        ),
+        Icon(Icons.cloud_off_rounded, size: 56, color: AppColors.mediumGrey),
         const SizedBox(height: 16),
         Text(
           message,

@@ -16,7 +16,7 @@ class OrderStatusStepper extends StatelessWidget {
   static const List<String> _onlineFulfillmentSteps = [
     'Pending',
     'Confirmed',
-    'Processing',
+    // 'Processing',
     'Ready to ship',
     'Delivery accepted',
     'Shipped',
@@ -26,7 +26,7 @@ class OrderStatusStepper extends StatelessWidget {
   static const List<String> _pickupFulfillmentSteps = [
     'Pending',
     'Confirmed',
-    'Processing',
+    // 'Processing',
     'Waiting for pickup',
     'Completed',
   ];

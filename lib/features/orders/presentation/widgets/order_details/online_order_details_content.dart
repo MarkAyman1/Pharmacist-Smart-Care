@@ -13,10 +13,14 @@ class OnlineOrderDetailsContent extends StatelessWidget {
     super.key,
     required this.order,
     required this.dateFmt,
+    required this.currentStatus,
+    required this.onStatusUpdated,
   });
 
   final OnlineOrderModel order;
   final DateFormat dateFmt;
+  final String currentStatus;
+  final ValueChanged<String> onStatusUpdated;
 
   @override
   Widget build(BuildContext context) {
@@ -27,19 +31,20 @@ class OnlineOrderDetailsContent extends StatelessWidget {
         OrderClientHeroHeader(
           clientName: order.clientName,
           phone: order.clientPhone,
-          status: order.status,
+          status: currentStatus,
           orderId: order.orderId,
           orderDateLabel: dateFmt.format(order.orderDate.toLocal()),
         ),
-        OrderStatusStepper(currentStatus: order.status, isOnlineOrder: true),
-        PaymentStatusWidget(isPaid: order.isPaid, status: order.status),
+        OrderStatusStepper(currentStatus: currentStatus, isOnlineOrder: true),
+        PaymentStatusWidget(isPaid: order.isPaid, status: currentStatus),
         OrderOnlineInfoSection(order: order),
         OrderItemsSection(items: order.items),
         OrderDetailsActionSection(
           total: order.totalPrice,
           orderId: order.orderId,
           isOnlineOrder: true,
-          apiStatus: order.status,
+          apiStatus: currentStatus,
+          onStatusUpdated: onStatusUpdated,
         ),
       ],
     );

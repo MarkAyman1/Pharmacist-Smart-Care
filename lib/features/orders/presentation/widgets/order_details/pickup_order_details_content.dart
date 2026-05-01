@@ -12,10 +12,14 @@ class PickupOrderDetailsContent extends StatelessWidget {
     super.key,
     required this.order,
     required this.dateFmt,
+    required this.currentStatus,
+    required this.onStatusUpdated,
   });
 
   final PickupOrderModel order;
   final DateFormat dateFmt;
+  final String currentStatus;
+  final ValueChanged<String> onStatusUpdated;
 
   @override
   Widget build(BuildContext context) {
@@ -26,18 +30,19 @@ class PickupOrderDetailsContent extends StatelessWidget {
         OrderClientHeroHeader(
           clientName: order.clientName,
           phone: order.clientPhone,
-          status: order.status,
+          status: currentStatus,
           orderId: order.orderId,
           orderDateLabel: dateFmt.format(order.orderDate.toLocal()),
         ),
-        OrderStatusStepper(currentStatus: order.status, isOnlineOrder: false),
-        PaymentStatusWidget(isPaid: order.isPaid, status: order.status),
+        OrderStatusStepper(currentStatus: currentStatus, isOnlineOrder: false),
+        PaymentStatusWidget(isPaid: order.isPaid, status: currentStatus),
         OrderItemsSection(items: order.items),
         OrderDetailsActionSection(
           total: order.totalPrice,
           orderId: order.orderId,
           isOnlineOrder: false,
-          apiStatus: order.status,
+          apiStatus: currentStatus,
+          onStatusUpdated: onStatusUpdated,
         ),
       ],
     );
