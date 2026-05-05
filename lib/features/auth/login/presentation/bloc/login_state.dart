@@ -15,3 +15,5 @@ class LoginFailed extends LoginState {
   final String error;
   LoginFailed(this.error);
 }
+
+class BiometricLoginSuccess extends LoginState {}

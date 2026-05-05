@@ -6,6 +6,7 @@ import 'package:pharmacist/features/auth/login/data/repo/login_repositry.dart';
 import 'package:pharmacist/features/auth/login/presentation/bloc/login_bloc.dart';
 import 'package:pharmacist/features/auth/login/presentation/views/widgets/bottom_widget.dart';
 import 'package:pharmacist/features/auth/login/presentation/views/widgets/login_form.dart';
+import 'package:pharmacist/features/auth/login/presentation/views/widgets/biometric_login_button.dart';
 import 'package:pharmacist/features/auth/widgets/header_section.dart';
 import 'package:pharmacist/features/auth/login/presentation/views/widgets/lottie_background.dart';
 
@@ -25,6 +26,8 @@ class LoginScreen extends StatelessWidget {
                 const HeaderSection(),
                 const SizedBox(height: 100),
                 const LoginForm(),
+                const SizedBox(height: 20),
+                const BiometricLoginButton(),
                 const SizedBox(height: 100),
                 BottomWidget(),
                 const SizedBox(height: 20),
