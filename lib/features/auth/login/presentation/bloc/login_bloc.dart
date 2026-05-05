@@ -36,7 +36,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         if (response.succeeded == true && response.data != null) {
           await CacheHelper.saveAccessToken(response.data!.accessToken!);
           await CacheHelper.saveRefreshToken(response.data!.refreshToken!);
-          
+
           // Save credentials securely for biometric login
           await SecureStorageService().saveCredentials(
             email: event.email,

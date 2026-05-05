@@ -26,7 +26,7 @@ class _BiometricLoginButtonState extends State<BiometricLoginButton> {
   Future<void> _checkBiometricAvailability() async {
     final isAvailable = await BiometricAuthService.isBiometricAvailable();
     final credentials = await SecureStorageService().getCredentials();
-    
+
     setState(() {
       _isBiometricAvailable = isAvailable;
       _hasCredentialsSaved = credentials != null;
@@ -47,9 +47,9 @@ class _BiometricLoginButtonState extends State<BiometricLoginButton> {
           child: Text(
             'Login with email first to enable biometric login',
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: Colors.grey[600],
-            ),
+            style: Theme.of(
+              context,
+            ).textTheme.bodySmall?.copyWith(color: Colors.grey[600]),
           ),
         ),
       );
@@ -64,7 +64,11 @@ class _BiometricLoginButtonState extends State<BiometricLoginButton> {
                   context.read<LoginBloc>().add(BiometricLoginPressed());
                 },
           icon: const Icon(Icons.fingerprint),
-          label: Text(state is Loginloading ? 'Authenticating...' : 'Login with Biometrics'),
+          label: Text(
+            state is Loginloading
+                ? 'Authenticating...'
+                : 'Login with Biometrics',
+          ),
           style: ElevatedButton.styleFrom(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
             shape: RoundedRectangleBorder(

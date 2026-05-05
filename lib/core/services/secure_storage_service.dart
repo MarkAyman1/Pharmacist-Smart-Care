@@ -1,7 +1,8 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class SecureStorageService {
-  static final SecureStorageService _instance = SecureStorageService._internal();
+  static final SecureStorageService _instance =
+      SecureStorageService._internal();
   static const String _emailKey = 'pharmacist_email';
   static const String _passwordKey = 'pharmacist_password';
   static const String _shouldRememberKey = 'pharmacist_should_remember';
@@ -43,7 +44,7 @@ class SecureStorageService {
     } catch (e) {
       print('⚠️ Error retrieving email from secure storage: $e');
     }
-    
+
     // Fallback to memory storage
     return _memoryStorage[_emailKey];
   }
@@ -56,7 +57,7 @@ class SecureStorageService {
     } catch (e) {
       print('⚠️ Error retrieving password from secure storage: $e');
     }
-    
+
     // Fallback to memory storage
     return _memoryStorage[_passwordKey];
   }
@@ -69,7 +70,7 @@ class SecureStorageService {
     } catch (e) {
       print('⚠️ Error checking remember flag: $e');
     }
-    
+
     // Fallback to memory storage
     return _memoryStorage[_shouldRememberKey] == 'true';
   }
@@ -84,7 +85,7 @@ class SecureStorageService {
     } catch (e) {
       print('⚠️ Error clearing credentials: $e');
     }
-    
+
     // Clear memory storage
     _memoryStorage.clear();
   }

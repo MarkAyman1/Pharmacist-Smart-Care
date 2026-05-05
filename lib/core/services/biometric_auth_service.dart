@@ -6,7 +6,8 @@ class BiometricAuthService {
   /// Check if biometric authentication is available on the device
   static Future<bool> isBiometricAvailable() async {
     try {
-      final List<BiometricType> availableBiometrics = await _auth.getAvailableBiometrics();
+      final List<BiometricType> availableBiometrics = await _auth
+          .getAvailableBiometrics();
       return availableBiometrics.isNotEmpty;
     } catch (e) {
       print('Error checking biometric availability: $e');
