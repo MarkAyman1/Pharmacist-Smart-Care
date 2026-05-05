@@ -90,9 +90,9 @@ class ProductInfo extends StatelessWidget {
 
         Row(
           children: [
-            Text("Stock: $quantity"),
+            Text("Available: $quantity"),
             const Spacer(),
-            Text("Available: $stockquantity"),
+            Text("Stock: $stockquantity"),
           ],
         ),
       ],
