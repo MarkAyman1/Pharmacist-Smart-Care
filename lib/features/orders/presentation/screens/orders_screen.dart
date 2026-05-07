@@ -8,7 +8,7 @@ import 'package:pharmacist/features/orders/domain/repo/orders_repository.dart';
 import 'package:pharmacist/features/orders/presentation/bloc/orders_event.dart';
 import 'package:pharmacist/features/orders/presentation/bloc/ordersbloc.dart';
 import 'package:pharmacist/features/orders/presentation/widgets/orders_filter_tabs.dart';
-import 'package:pharmacist/features/orders/presentation/widgets/orders_list.dart';
+import 'package:pharmacist/features/orders/presentation/widgets/orders_list/orders_list.dart';
 
 class OrdersScreen extends StatelessWidget {
   const OrdersScreen({super.key});

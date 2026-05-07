@@ -21,10 +21,10 @@ class MainScreenView extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final screens = const [
+      OrdersScreen(),
       CategoriesScreen(),
       CompaniesScreen(),
       SearchScreen(),
-      OrdersScreen(),
     ];
 
     return MultiBlocProvider(
@@ -65,10 +65,10 @@ class MainScreenView extends StatelessWidget {
                   end: Alignment.bottomRight,
                 ),
                 items: const [
+                  TabItem(icon: LineIcons.receipt, title: 'Orders'),
                   TabItem(icon: LineIcons.box, title: 'categories'),
                   TabItem(icon: LineIcons.building, title: 'companies'),
                   TabItem(icon: LineIcons.search, title: 'Search'),
-                  TabItem(icon: LineIcons.receipt, title: 'Orders'),
                 ],
               ),
             ),
