@@ -30,7 +30,7 @@ class TotalBar extends StatelessWidget {
               ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
             ),
             Text(
-              '\$${total.toStringAsFixed(2)}',
+              'EGP ${total.toStringAsFixed(2)}',
               style: Theme.of(
                 context,
               ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w800),

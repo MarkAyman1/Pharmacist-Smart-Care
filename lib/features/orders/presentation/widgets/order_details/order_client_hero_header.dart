@@ -94,7 +94,7 @@ class OrderClientHeroHeader extends StatelessWidget {
             spacing: 10,
             runSpacing: 8,
             children: [
-              _Chip(icon: Icons.tag_rounded, label: '#$orderId', isSmall: true),
+              _Chip(icon: Icons.tag_rounded, label: '$orderId', isSmall: true),
               _Chip(icon: Icons.schedule_rounded, label: orderDateLabel),
             ],
           ),
@@ -115,10 +115,7 @@ class _Chip extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: isSmall ? 8 : 12,
-        vertical: isSmall ? 4 : 8,
-      ),
+      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
         color: isDark
             ? AppColors.secondaryDarkColor.withValues(alpha: 0.8)
@@ -128,13 +125,13 @@ class _Chip extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: isSmall ? 12 : 16, color: AppColors.primaryblue),
+          Icon(icon, size: 16, color: AppColors.primaryblue),
           const SizedBox(width: 4),
           Text(
-            label,
+            isSmall ? label.substring(0, 8) : label,
             style: Theme.of(context).textTheme.labelSmall?.copyWith(
               fontWeight: FontWeight.w600,
-              fontSize: isSmall ? 10 : null,
+              fontSize: null,
             ),
           ),
         ],
