@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:pharmacist/core/date_time_extensions.dart';
 import 'package:pharmacist/features/orders/domain/models/online_order_model.dart';
 import 'package:pharmacist/features/orders/presentation/widgets/order_details/delivery_payment_status_widget.dart';
 import 'package:pharmacist/features/orders/presentation/widgets/order_details/order_client_hero_header.dart';
@@ -34,7 +35,7 @@ class OnlineOrderDetailsContent extends StatelessWidget {
           phone: order.clientPhone,
           status: currentStatus,
           orderId: order.orderId,
-          orderDateLabel: dateFmt.format(order.orderDate.toLocal()),
+          orderDateLabel: dateFmt.format(order.orderDate.egyptTime),
         ),
         OrderStatusStepper(currentStatus: currentStatus, isOnlineOrder: true),
         PaymentStatusWidget(isPaid: order.isPaid, status: currentStatus),

@@ -1,3 +1,4 @@
+import 'package:pharmacist/core/date_time_extensions.dart';
 import 'package:pharmacist/features/orders/domain/models/order_item_model.dart';
 
 class OnlineOrderModel {
@@ -34,7 +35,7 @@ class OnlineOrderModel {
       clientPhone: json['clientPhone'],
       totalPrice: (json['totalPrice'] as num).toDouble(),
       status: json['status'],
-      orderDate: DateTime.parse(json['orderDate']),
+      orderDate: parseUtcOrderDate(json['orderDate']as String),
       distanceFromBranch: (json['distanceFromBranch'] as num).toDouble(),
       deliveryAddress: json['deliveryAddress'],
       additionalInfo: json['additionalInfo'],

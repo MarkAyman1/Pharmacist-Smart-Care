@@ -1,3 +1,4 @@
+import 'package:pharmacist/core/date_time_extensions.dart';
 import 'package:pharmacist/features/orders/domain/models/order_item_model.dart';
 
 class PickupOrderModel {
@@ -30,7 +31,7 @@ class PickupOrderModel {
       clientPhone: json['clientPhone'],
       totalPrice: (json['totalPrice'] as num).toDouble(),
       status: json['status'],
-      orderDate: DateTime.parse(json['orderDate']),
+      orderDate: parseUtcOrderDate(json['orderDate']as String),
       pickupCode: json['pickupCode'],
       items: (json['items'] as List)
           .map((e) => OrderItemModel.fromJson(e))
