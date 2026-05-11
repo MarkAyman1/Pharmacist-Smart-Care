@@ -9,10 +9,7 @@ import 'company_products_listener.dart';
 class CompanyProductsBody extends StatelessWidget {
   final String companyId;
 
-  const CompanyProductsBody({
-    super.key,
-    required this.companyId,
-  });
+  const CompanyProductsBody({super.key, required this.companyId});
 
   @override
   Widget build(BuildContext context) {
@@ -23,13 +20,23 @@ class CompanyProductsBody extends StatelessWidget {
       builder: (context, state) {
         if (state is ProductsLoading) {
           return const Center(child: CircularProgressIndicator());
-        } 
-        
-        else if (state is ProductsLoaded) {
+        } else if (state is ProductsLoaded) {
           return ProductsList(
             products: state.products.items,
             hasNext: state.products.hasNext,
             currentPage: state.products.pageNumber,
+            onRefresh: () async {
+              context.read<ProductsBloc>().add(
+                FetchProductsByCompanyEvent(
+                  companyId: companyId,
+                  pageNumber: state.products.pageNumber,
+                ),
+              );
+
+              await context.read<ProductsBloc>().stream.firstWhere(
+                (state) => state is ProductsLoaded || state is ProductsError,
+              );
+            },
 
             // Next
             onNext: () {
@@ -53,9 +60,7 @@ class CompanyProductsBody extends StatelessWidget {
               }
             },
           );
-        } 
-        
-        else if (state is ProductsError) {
+        } else if (state is ProductsError) {
           return Center(child: Text(state.message));
         }
 

@@ -13,6 +13,7 @@ class ProductsScreen extends StatelessWidget {
   final int currentPage;
   final VoidCallback onNext;
   final VoidCallback onPrevious;
+  final Future<void> Function()? onRefresh;
 
   const ProductsScreen({
     super.key,
@@ -21,6 +22,7 @@ class ProductsScreen extends StatelessWidget {
     required this.currentPage,
     required this.onNext,
     required this.onPrevious,
+    this.onRefresh,
   });
 
   @override
@@ -33,6 +35,7 @@ class ProductsScreen extends StatelessWidget {
           products: products,
           hasNext: hasNext,
           currentPage: currentPage,
+          onRefresh: onRefresh,
           onNext: onNext,
           onPrevious: onPrevious,
         ),
