@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
+import 'package:pharmacist/core/date_time_extensions.dart';
 
 import 'package:pharmacist/features/orders/domain/models/paginated_orders.dart';
 import 'package:pharmacist/features/orders/domain/models/pickup_order_model.dart';
@@ -78,7 +79,7 @@ class PickupOrdersBody extends StatelessWidget {
             totalPrice: order.totalPrice,
             itemsCount: order.items.length,
             subtitle: order.clientPhone,
-            orderDateLabel: dateFmt.format(order.orderDate.toLocal()),
+            orderDateLabel: dateFmt.format(order.orderDate.egyptTime),
             onTap: () {
               final bloc = context.read<OrdersBloc>();
 
