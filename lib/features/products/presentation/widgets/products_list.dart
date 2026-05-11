@@ -10,6 +10,7 @@ class ProductsList extends StatelessWidget {
   final List<ProductModel> products;
   final bool hasNext;
   final int currentPage;
+  final Future<void> Function()? onRefresh;
   final VoidCallback? onNext;
   final VoidCallback? onPrevious;
 
@@ -18,13 +19,14 @@ class ProductsList extends StatelessWidget {
     required this.products,
     required this.hasNext,
     required this.currentPage,
+    this.onRefresh,
     this.onNext,
     this.onPrevious,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    final content = Column(
       children: [
         Expanded(
           child: ListView.separated(
@@ -101,5 +103,11 @@ class ProductsList extends StatelessWidget {
           ),
       ],
     );
+
+    if (onRefresh == null) {
+      return content;
+    }
+
+    return RefreshIndicator(onRefresh: onRefresh!, child: content);
   }
 }

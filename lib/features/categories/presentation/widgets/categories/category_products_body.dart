@@ -10,10 +10,7 @@ import 'category_products_listener.dart';
 class CategoryProductsBody extends StatelessWidget {
   final String categoryId;
 
-  const CategoryProductsBody({
-    super.key,
-    required this.categoryId,
-  });
+  const CategoryProductsBody({super.key, required this.categoryId});
 
   @override
   Widget build(BuildContext context) {
@@ -24,13 +21,23 @@ class CategoryProductsBody extends StatelessWidget {
       builder: (context, state) {
         if (state is ProductsLoading) {
           return const Center(child: CircularProgressIndicator());
-        } 
-        
-        else if (state is ProductsLoaded) {
+        } else if (state is ProductsLoaded) {
           return ProductsList(
             products: state.products.items,
             hasNext: state.products.hasNext,
             currentPage: state.products.pageNumber,
+            onRefresh: () async {
+              context.read<ProductsBloc>().add(
+                FetchProductsByCategoryEvent(
+                  categoryId: categoryId,
+                  pageNumber: state.products.pageNumber,
+                ),
+              );
+
+              await context.read<ProductsBloc>().stream.firstWhere(
+                (state) => state is ProductsLoaded || state is ProductsError,
+              );
+            },
 
             // Next
             onNext: () {
@@ -54,9 +61,7 @@ class CategoryProductsBody extends StatelessWidget {
               }
             },
           );
-        } 
-        
-        else if (state is ProductsError) {
+        } else if (state is ProductsError) {
           return Center(child: Text(state.message));
         }
 
