@@ -60,7 +60,7 @@ class OrderProductItem extends StatelessWidget {
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      'Qty ${item.quantity} · \$${item.unitPrice.toStringAsFixed(2)} each',
+                      'Qty ${item.quantity} · EGP ${item.unitPrice.toStringAsFixed(2)} each',
                       style: theme.textTheme.bodySmall?.copyWith(
                         color: isDark
                             ? AppColors.darkMediumGrey
@@ -74,7 +74,7 @@ class OrderProductItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    '\$${item.subTotal.toStringAsFixed(2)}',
+                    'EGP${item.subTotal.toStringAsFixed(2)}',
                     style: theme.textTheme.titleSmall?.copyWith(
                       fontWeight: FontWeight.w800,
                       color: AppColors.primaryblue,

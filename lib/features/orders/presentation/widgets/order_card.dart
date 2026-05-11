@@ -144,7 +144,7 @@ class OrderCard extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          '\$${totalPrice.toStringAsFixed(2)}',
+                          'EGP ${totalPrice.toStringAsFixed(2)}',
                           style: theme.textTheme.titleMedium?.copyWith(
                             color: AppColors.primaryblue,
                             fontWeight: FontWeight.w800,

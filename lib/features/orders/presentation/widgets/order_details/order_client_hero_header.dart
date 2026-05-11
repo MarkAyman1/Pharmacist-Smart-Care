@@ -128,7 +128,7 @@ class _Chip extends StatelessWidget {
           Icon(icon, size: 16, color: AppColors.primaryblue),
           const SizedBox(width: 4),
           Text(
-            isSmall ? label.substring(1, 8) : label,
+            isSmall ? label.substring(0, 8) : label,
             style: Theme.of(context).textTheme.labelSmall?.copyWith(
               fontWeight: FontWeight.w600,
               fontSize: null,
