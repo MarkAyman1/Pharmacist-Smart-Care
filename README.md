@@ -8,79 +8,71 @@ A Flutter-based pharmacy management system that allows users to browse products,
 
 ### 🧠 Programming Language
 
-* Dart SDK: `^3.11.0`
+- Dart SDK: `^3.11.0`
 
 ### 📱 Framework
 
-* Flutter SDK (latest stable version)
+- Flutter SDK (latest stable version)
 
 ---
 
 ### 📦 Main Dependencies
 
-* **State Management**
+- **State Management**
+  - `flutter_bloc`
 
-  * `flutter_bloc`
+- **Networking**
+  - `dio`
 
-* **Networking**
+- **Functional Programming**
+  - `dartz`
 
-  * `dio`
+- **Local Storage**
+  - `shared_preferences`
 
-* **Functional Programming**
+- **Utilities**
+  - `equatable`
+  - `intl`
+  - `jwt_decoder`
 
-  * `dartz`
+- **UI / UX**
+  - `lottie`
+  - `cached_network_image`
+  - `animated_text_kit`
+  - `convex_bottom_bar`
+  - `line_icons`
+  - `flutter_advanced_drawer`
 
-* **Local Storage**
+- **Device Tools**
+  - `image_picker`
+  - `device_preview`
 
-  * `shared_preferences`
-
-* **Utilities**
-
-  * `equatable`
-  * `intl`
-  * `jwt_decoder`
-
-* **UI / UX**
-
-  * `lottie`
-  * `cached_network_image`
-  * `animated_text_kit`
-  * `convex_bottom_bar`
-  * `line_icons`
-  * `flutter_advanced_drawer`
-
-* **Device Tools**
-
-  * `image_picker`
-  * `device_preview`
-
-* **Splash & Icons**
-
-  * `flutter_native_splash`
-  * `flutter_launcher_icons`
+- **Splash & Icons**
+  - `flutter_native_splash`
+  - `flutter_launcher_icons`
 
 ---
 
 ## 💻 Required Software
 
-* Flutter SDK
-* Android Studio or VS Code
-* Android SDK
-* Git
+- Flutter SDK
+- Android Studio or VS Code
+- Android SDK
+- Git
 
 ---
 
 ## 🖥 System Requirements
 
-* OS: Windows / macOS / Linux
-* RAM: 8GB minimum (16GB recommended)
-* Storage: 5GB free space
+- OS: Windows / macOS / Linux
+- RAM: 8GB minimum (16GB recommended)
+- Storage: 5GB free space
 
 ---
 
 ## 🌐 External Services
 
-* REST APIs (used for authentication, products, orders, categories, companies, and search)
+- REST APIs (used for authentication, products, orders, categories, companies, and search)
 
 ---
 
@@ -209,28 +201,36 @@ lib/
 
 ## 🧠 Architecture
 
-* Feature-based structure
-* Bloc state management
-* Clean separation between core and features
-* API-driven using Dio
+- Feature-based structure
+- Bloc state management
+- Clean separation between core and features
+- API-driven using Dio
 
 ---
 
 ## 📌 Features
 
-* 🔐 Authentication
-* 🏠 Home Screen
-* 🔎 Search
-* 💊 Products
-* 🏷 Categories
-* 🏭 Companies
-* 🛒 Orders
-* 🎬 Splash Screen
+- 🔐 Authentication
+- 🏠 Home Screen
+- 🔎 Search
+- 💊 Products
+- 🏷 Categories
+- 🏭 Companies
+- 🛒 Orders
+- 🎬 Splash Screen
 
 ---
 
 ## 📄 License
 
 This project is for educational purposes.
+
+---
+
+## 📦 Download APK
+
+🚀 Get the latest version of the app here:
+
+- 📥 [Download APK](https://mega.nz/file/97gC3JwR#pgixZ-wHdHCoFfT3xIJ74HFiLHB5kGAWSHaG5WFFdVY)
 
 ---
