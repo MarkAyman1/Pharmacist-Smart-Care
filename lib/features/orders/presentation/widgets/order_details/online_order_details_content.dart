@@ -44,6 +44,7 @@ class OnlineOrderDetailsContent extends StatelessWidget {
         OrderItemsSection(items: order.items),
         OrderDetailsActionSection(
           total: order.totalPrice,
+          deliveryFee: order.deliveryFees,
           orderId: order.orderId,
           isOnlineOrder: true,
           apiStatus: currentStatus,

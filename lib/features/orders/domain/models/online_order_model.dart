@@ -6,6 +6,7 @@ class OnlineOrderModel {
   final String clientName;
   final String clientPhone;
   final double totalPrice;
+  final double deliveryFees;
   final String status;
   final DateTime orderDate;
   final double distanceFromBranch;
@@ -19,6 +20,7 @@ class OnlineOrderModel {
     required this.clientName,
     required this.clientPhone,
     required this.totalPrice,
+    required this.deliveryFees,
     required this.status,
     required this.orderDate,
     required this.distanceFromBranch,
@@ -34,6 +36,7 @@ class OnlineOrderModel {
       clientName: json['clientName'],
       clientPhone: json['clientPhone'],
       totalPrice: (json['totalPrice'] as num).toDouble(),
+      deliveryFees: (json['deliveryFees'] as num).toDouble(),
       status: json['status'],
       orderDate: parseUtcOrderDate(json['orderDate']as String),
       distanceFromBranch: (json['distanceFromBranch'] as num).toDouble(),
